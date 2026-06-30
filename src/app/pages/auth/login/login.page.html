@@ -1,0 +1,103 @@
+<ion-content class="login-content" [fullscreen]="true">
+  <!-- Hero Section -->
+  <div class="login-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-text">
+      <div class="hero-icon">🕌</div>
+      <h1>Saudi Explorer</h1>
+      <p>اكتشف جمال المملكة</p>
+    </div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <div class="card-header">
+      <h2>مرحباً بك</h2>
+      <p>سجّل دخولك للاستكشاف</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="login()" class="login-form">
+      <!-- Username -->
+      <div class="input-group">
+        <label class="input-label">اسم المستخدم</label>
+        <div class="input-wrap" [class.error]="form.get('username')?.invalid && form.get('username')?.touched">
+          <ion-icon name="person-outline" class="input-icon"></ion-icon>
+          <ion-input
+            formControlName="username"
+            type="text"
+            placeholder="أدخل اسم المستخدم"
+            class="custom-input">
+          </ion-input>
+        </div>
+        <span class="error-msg" *ngIf="form.get('username')?.invalid && form.get('username')?.touched">
+          اسم المستخدم مطلوب
+        </span>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <label class="input-label">كلمة المرور</label>
+        <div class="input-wrap" [class.error]="form.get('password')?.invalid && form.get('password')?.touched">
+          <ion-icon name="lock-closed-outline" class="input-icon"></ion-icon>
+          <ion-input
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="أدخل كلمة المرور"
+            class="custom-input">
+          </ion-input>
+          <button type="button" class="eye-btn" (click)="showPassword = !showPassword">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </button>
+        </div>
+        <span class="error-msg" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+          كلمة المرور يجب أن تكون 6 أحرف على الأقل
+        </span>
+      </div>
+
+      <!-- Login Button -->
+      <ion-button
+        type="submit"
+        expand="block"
+        class="login-btn"
+        [disabled]="isLoading">
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+        {{ isLoading ? 'جاري الدخول...' : 'تسجيل الدخول' }}
+      </ion-button>
+
+      <!-- Demo Login -->
+      <ion-button
+        fill="outline"
+        expand="block"
+        class="demo-btn"
+        (click)="demoLogin()"
+        [disabled]="isLoading">
+        جرّب الآن بدون تسجيل 👋
+      </ion-button>
+    </form>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span></span>
+      <p>أو</p>
+      <span></span>
+    </div>
+
+    <!-- Social Login -->
+    <div class="social-btns">
+      <button class="social-btn google-btn">
+        <ion-icon name="logo-google"></ion-icon>
+        <span>Google</span>
+      </button>
+      <button class="social-btn apple-btn">
+        <ion-icon name="logo-apple"></ion-icon>
+        <span>Apple</span>
+      </button>
+    </div>
+
+    <!-- Register Link -->
+    <div class="register-link">
+      <span>ليس لديك حساب؟</span>
+      <button (click)="goToRegister()">إنشاء حساب جديد</button>
+    </div>
+  </div>
+</ion-content>

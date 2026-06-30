@@ -1,0 +1,50 @@
+.explore-header {
+  ion-toolbar { --background: var(--ion-card-background); }
+  .page-title  { font-weight: 800; font-size: 20px; font-family: 'Cairo', sans-serif; }
+
+  .search-toolbar {
+    --background: var(--ion-card-background);
+    --padding-bottom: 0;
+  }
+
+  .explore-search {
+    --background: var(--ion-background-color);
+    --border-radius: 14px;
+    --box-shadow: none;
+    --placeholder-color: var(--text-tertiary);
+    padding-bottom: 8px;
+  }
+
+  .segment-toolbar {
+    --background: var(--ion-card-background);
+    --padding-start: 16px;
+    --padding-end: 16px;
+
+    ion-segment { margin-bottom: 8px; }
+  }
+}
+
+.explore-content { --background: var(--ion-background-color); }
+
+.content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.attr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  app-attraction-card { width: 100% !important; min-width: unset !important; }
+  ::ng-deep .attraction-card { width: 100% !important; min-width: unset !important; }
+}
+
+.content-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}

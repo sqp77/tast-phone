@@ -1,0 +1,161 @@
+<ion-content class="home-content" [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingText="اسحب للتحديث" refreshingText="جاري التحديث..."></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- ─── Hero Banner ─────────────────────────────────────────────────────── -->
+  <div class="hero-section">
+    <div class="hero-image-wrap">
+      <img [src]="currentHero.image" class="hero-img" [alt]="currentHero.titleAr" />
+      <div class="hero-gradient"></div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar safe-area-top">
+      <button class="icon-btn" (click)="openMenu()">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+      <div class="logo-text">Saudi Explorer</div>
+      <div class="top-actions">
+        <button class="icon-btn notif-btn" (click)="goToNotifications()">
+          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-badge *ngIf="unreadCount() > 0" class="notif-badge">{{ unreadCount() }}</ion-badge>
+        </button>
+        <ion-avatar class="user-avatar" (click)="openMenu()">
+          <img [src]="user()?.avatar || 'assets/icon/default-avatar.png'" alt="avatar" />
+        </ion-avatar>
+      </div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <ion-chip class="hero-badge">{{ currentHero.badge }}</ion-chip>
+      <h1 class="hero-title">{{ currentHero.titleAr }}</h1>
+      <p class="hero-subtitle">{{ currentHero.subtitleAr }}</p>
+    </div>
+
+    <!-- Hero Dots -->
+    <div class="hero-dots">
+      <button
+        *ngFor="let s of heroSlides; let i = index"
+        class="hero-dot"
+        [class.active]="i === currentHeroIndex"
+        (click)="selectHero(i)">
+      </button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar-wrap" (click)="goToSearch()">
+      <div class="search-bar">
+        <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        <span class="search-placeholder">ابحث عن مدينة، معلم، فعالية...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Quick Links ─────────────────────────────────────────────────────── -->
+  <div class="quick-links-wrap">
+    <div class="scroll-x quick-links">
+      <div *ngFor="let link of quickLinks" class="quick-link">
+        <div class="ql-icon">{{ link.icon }}</div>
+        <span class="ql-label">{{ link.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Featured Cities ────────────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="المدن المميزة"
+      subtitle="أبرز الوجهات السياحية"
+      [showAction]="true"
+      actionLabel="عرض الكل"
+      (actionClick)="goToCities()">
+    </app-section-header>
+
+    <div *ngIf="isLoading" class="scroll-x px-section">
+      <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
+    </div>
+
+    <div *ngIf="!isLoading" class="scroll-x px-section">
+      <app-city-card
+        *ngFor="let city of cities"
+        [city]="city"
+        variant="wide">
+      </app-city-card>
+    </div>
+  </section>
+
+  <!-- ─── Top Attractions ───────────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="أبرز المعالم"
+      subtitle="أماكن لا تفوتها"
+      [showAction]="true"
+      actionLabel="عرض الكل"
+      (actionClick)="goToExplore()">
+    </app-section-header>
+
+    <div *ngIf="isLoading" class="scroll-x px-section">
+      <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
+    </div>
+
+    <div *ngIf="!isLoading" class="scroll-x px-section">
+      <app-attraction-card
+        *ngFor="let attr of attractions"
+        [attraction]="attr">
+      </app-attraction-card>
+    </div>
+  </section>
+
+  <!-- ─── Popular Events ────────────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="الفعاليات القادمة"
+      subtitle="لا تفوّت الأحداث المميزة"
+      [showAction]="true"
+      actionLabel="عرض الكل"
+      (actionClick)="goToEvents()">
+    </app-section-header>
+
+    <div *ngIf="isLoading" class="scroll-x px-section">
+      <app-skeleton-card variant="event" [count]="3"></app-skeleton-card>
+    </div>
+
+    <div *ngIf="!isLoading" class="scroll-x px-section">
+      <app-event-card
+        *ngFor="let event of events"
+        [event]="event"
+        variant="card">
+      </app-event-card>
+    </div>
+  </section>
+
+  <!-- ─── Travel Articles ───────────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="أحدث المقالات"
+      subtitle="دليلك للسفر والسياحة"
+      [showAction]="true">
+    </app-section-header>
+
+    <div class="articles-list px-section" *ngIf="!isLoading">
+      <div *ngFor="let article of articles; let i = index" class="article-card animate-fadeInUp" [style.animation-delay]="i * 0.1 + 's'">
+        <img [src]="article.image" [alt]="article.titleAr" class="article-img" loading="lazy" />
+        <div class="article-body">
+          <ion-chip class="article-cat">{{ article.categoryAr }}</ion-chip>
+          <h3 class="article-title">{{ article.titleAr }}</h3>
+          <div class="article-meta">
+            <span class="article-author">{{ article.author }}</span>
+            <span class="dot">·</span>
+            <span class="article-time">{{ article.readTimeMin }} دقائق قراءة</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bottom-space"></div>
+
+</ion-content>

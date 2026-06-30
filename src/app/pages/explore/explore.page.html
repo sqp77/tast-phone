@@ -1,0 +1,62 @@
+<ion-header class="explore-header">
+  <ion-toolbar>
+    <ion-title class="page-title">استكشف المملكة</ion-title>
+  </ion-toolbar>
+  <ion-toolbar class="search-toolbar">
+    <ion-searchbar
+      placeholder="ابحث عن أي شيء..."
+      (ionInput)="onSearch($event)"
+      [value]="searchQuery"
+      animated
+      class="explore-search">
+    </ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar class="segment-toolbar">
+    <ion-segment [value]="activeSegment" (ionChange)="onSegmentChange($event)">
+      <ion-segment-button value="cities">
+        <ion-label>المدن</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="attractions">
+        <ion-label>المعالم</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="events">
+        <ion-label>الفعاليات</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="explore-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Cities Grid -->
+  <div *ngIf="activeSegment === 'cities'" class="content-grid">
+    <ng-container *ngIf="!isLoading; else skelLoading">
+      <app-city-card *ngFor="let city of cities" [city]="city" variant="featured"></app-city-card>
+      <app-empty-state *ngIf="!hasResults" icon="map-outline" title="لا توجد مدن" message="جرّب البحث بكلمة مختلفة"></app-empty-state>
+    </ng-container>
+  </div>
+
+  <!-- Attractions Grid -->
+  <div *ngIf="activeSegment === 'attractions'" class="content-grid attr-grid">
+    <ng-container *ngIf="!isLoading; else skelLoading">
+      <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+      <app-empty-state *ngIf="!hasResults" icon="compass-outline" title="لا توجد معالم" message="جرّب فئة مختلفة"></app-empty-state>
+    </ng-container>
+  </div>
+
+  <!-- Events List -->
+  <div *ngIf="activeSegment === 'events'" class="content-list">
+    <ng-container *ngIf="!isLoading; else skelLoading">
+      <app-event-card *ngFor="let event of events" [event]="event" variant="list"></app-event-card>
+      <app-empty-state *ngIf="!hasResults" icon="calendar-outline" title="لا توجد فعاليات" message="لا توجد فعاليات في هذه الفترة"></app-empty-state>
+    </ng-container>
+  </div>
+
+  <ng-template #skelLoading>
+    <app-skeleton-card variant="article" [count]="4"></app-skeleton-card>
+  </ng-template>
+
+</ion-content>

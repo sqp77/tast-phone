@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>الفعاليات</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="ابحث عن فعالية..." (ionInput)="onSearch($event)" animated></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar class="filter-toolbar">
+    <ion-segment [value]="activeFilter" (ionChange)="onFilterChange($event)" scrollable>
+      <ion-segment-button *ngFor="let f of filters" [value]="f.value">
+        <ion-label>{{ f.label }}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="events-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading" class="events-list">
+    <app-skeleton-card variant="event" [count]="5"></app-skeleton-card>
+  </div>
+
+  <div *ngIf="!isLoading && filtered.length > 0" class="events-list">
+    <app-event-card *ngFor="let event of filtered" [event]="event" variant="list"></app-event-card>
+  </div>
+
+  <app-empty-state
+    *ngIf="!isLoading && filtered.length === 0"
+    icon="calendar-outline"
+    title="لا توجد فعاليات"
+    message="جرّب تغيير الفئة أو الكلمة البحثية">
+  </app-empty-state>
+</ion-content>

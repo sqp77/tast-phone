@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>رحلاتي</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="trips-content">
+
+  <div *ngIf="trips().length === 0" class="empty-wrap">
+    <app-empty-state
+      icon="airplane-outline"
+      title="لا توجد رحلات"
+      message="خطّط رحلتك الأولى إلى المملكة العربية السعودية الآن"
+      actionLabel="إضافة رحلة جديدة"
+      [action]="addTripFn">
+    </app-empty-state>
+  </div>
+
+  <div *ngIf="trips().length > 0" class="trips-list">
+    <div *ngFor="let trip of trips()" class="trip-card" (click)="tripOptions(trip)">
+      <div class="trip-emoji">✈️</div>
+      <div class="trip-info">
+        <h3 class="trip-name">{{ trip.nameAr }}</h3>
+        <div class="trip-dates" *ngIf="trip.startDate">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <span>{{ trip.startDate | date:'dd MMM yyyy' }}</span>
+          <span *ngIf="trip.endDate"> – {{ trip.endDate | date:'dd MMM yyyy' }}</span>
+        </div>
+      </div>
+      <div class="trip-status" [class]="'status-' + trip.status">
+        {{ statusLabel(trip.status) }}
+      </div>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addTrip()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

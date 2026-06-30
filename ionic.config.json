@@ -1,0 +1,7 @@
+{
+  "name": "Saudi Explorer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

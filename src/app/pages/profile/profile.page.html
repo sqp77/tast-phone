@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>حسابي</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+
+  <!-- Profile Hero -->
+  <div class="profile-hero">
+    <div class="avatar-wrap">
+      <img
+        [src]="auth.user()?.avatar || 'assets/icon/default-avatar.png'"
+        alt="avatar"
+        class="profile-avatar" />
+      <button class="edit-avatar-btn">
+        <ion-icon name="camera-outline"></ion-icon>
+      </button>
+    </div>
+    <h2 class="profile-name">{{ auth.displayName() }}</h2>
+    <p class="profile-username">{{ '@' + (auth.user()?.username ?? '') }}</p>
+    <p class="profile-email">{{ auth.user()?.email }}</p>
+
+    <!-- Stats Row -->
+    <div class="profile-stats">
+      <div class="stat">
+        <span class="stat-num">{{ favorites.count() }}</span>
+        <span class="stat-lbl">مفضلة</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-lbl">رحلات</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-num">12</span>
+        <span class="stat-lbl">تقييم</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu Items -->
+  <div class="menu-section">
+    <div *ngFor="let item of menuItems" class="menu-item" (click)="navigate(item.route)">
+      <div class="menu-icon-wrap">
+        <ion-icon [name]="item.icon"></ion-icon>
+      </div>
+      <span class="menu-label">{{ item.label }}</span>
+      <div class="menu-end">
+        <span *ngIf="item.badge" class="menu-badge">{{ item.badge }}</span>
+        <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout -->
+  <div class="logout-wrap">
+    <ion-button expand="block" fill="outline" color="danger" class="logout-btn" (click)="confirmLogout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      تسجيل الخروج
+    </ion-button>
+  </div>
+
+  <div class="app-version">Saudi Explorer v1.0.0</div>
+
+</ion-content>

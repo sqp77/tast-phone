@@ -1,0 +1,42 @@
+.search-content { --background: var(--ion-background-color); }
+
+.main-search {
+  --background: var(--ion-background-color);
+  --border-radius: 14px;
+  --box-shadow: none;
+}
+
+.discover-state { padding: 20px 16px; }
+
+.trending-section { margin-bottom: 24px; }
+
+.section-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ion-text-color);
+  margin: 0 0 12px;
+  font-family: 'Cairo', sans-serif;
+}
+
+.chips-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.trend-chip {
+  --background: var(--ion-card-background);
+  --color: var(--ion-text-color);
+  box-shadow: var(--shadow-soft);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.results-wrap { padding: 16px; }
+
+.result-section { margin-bottom: 24px; }
+
+.result-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

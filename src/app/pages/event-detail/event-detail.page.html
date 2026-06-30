@@ -1,0 +1,106 @@
+<ion-content class="event-detail-content" [fullscreen]="true" *ngIf="event">
+
+  <!-- Hero Image -->
+  <div class="event-hero">
+    <img [src]="event.image" [alt]="event.titleAr" class="hero-img" />
+    <div class="hero-gradient"></div>
+
+    <!-- Toolbar -->
+    <div class="detail-toolbar safe-area-top">
+      <ion-buttons>
+        <ion-back-button defaultHref="/events" text="" class="back-btn"></ion-back-button>
+      </ion-buttons>
+      <div class="toolbar-actions">
+        <ion-button fill="clear" class="action-btn" (click)="share()">
+          <ion-icon name="share-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" class="action-btn" (click)="toggleFavorite()">
+          <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" [color]="isFavorite ? 'danger' : ''" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Event Header -->
+    <div class="event-header">
+      <ion-chip class="event-cat-badge">{{ event.categoryAr }}</ion-chip>
+      <h1 class="event-title">{{ event.titleAr }}</h1>
+      <div class="event-city">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ event.cityNameAr }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body Card -->
+  <div class="event-body">
+
+    <!-- Quick Info -->
+    <div class="info-row">
+      <div class="info-badge">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <div>
+          <span class="badge-label">تاريخ البداية</span>
+          <span class="badge-val">{{ event.startDate | date:'dd MMM yyyy' }}</span>
+        </div>
+      </div>
+      <div class="info-badge">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <div>
+          <span class="badge-label">تاريخ النهاية</span>
+          <span class="badge-val">{{ event.endDate | date:'dd MMM yyyy' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-badge">
+        <ion-icon name="location-outline"></ion-icon>
+        <div>
+          <span class="badge-label">المكان</span>
+          <span class="badge-val">{{ event.venueAr }}</span>
+        </div>
+      </div>
+      <div class="info-badge" *ngIf="event.attendeeCount">
+        <ion-icon name="people-outline"></ion-icon>
+        <div>
+          <span class="badge-label">الحضور</span>
+          <span class="badge-val">{{ event.attendeeCount | number }}+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Price -->
+    <div class="price-block">
+      <span class="price-label">السعر</span>
+      <span class="price-val" *ngIf="event.priceType === 'free'">مجاناً 🎉</span>
+      <span class="price-val paid" *ngIf="event.priceType !== 'free'">{{ event.price }} ريال</span>
+    </div>
+
+    <!-- Description -->
+    <div class="section-block">
+      <h3 class="section-title">تفاصيل الفعالية</h3>
+      <p class="event-desc">{{ event.descriptionAr }}</p>
+    </div>
+
+    <!-- Tags -->
+    <div class="tags-row scroll-x" *ngIf="event.tagsAr.length > 0">
+      <ion-chip *ngFor="let tag of event.tagsAr" class="tag-chip">{{ tag }}</ion-chip>
+    </div>
+
+    <!-- Organizer -->
+    <div class="organizer-block" *ngIf="event.organizer">
+      <h3 class="section-title">المنظّم</h3>
+      <div class="organizer-card">
+        <div class="org-icon">🏢</div>
+        <span>{{ event.organizer }}</span>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <ion-button expand="block" class="book-btn">
+      <ion-icon name="ticket-outline" slot="start"></ion-icon>
+      احجز مكانك الآن
+    </ion-button>
+  </div>
+
+</ion-content>

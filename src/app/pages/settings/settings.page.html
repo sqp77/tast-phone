@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>الإعدادات</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="settings-content">
+
+  <!-- Appearance -->
+  <div class="settings-group">
+    <p class="group-title">المظهر</p>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="row-start">
+          <div class="row-icon"><ion-icon name="moon-outline"></ion-icon></div>
+          <span class="row-label">الوضع الليلي</span>
+        </div>
+        <ion-toggle [checked]="darkMode()" (ionChange)="toggleDark($event)"></ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notifications -->
+  <div class="settings-group">
+    <p class="group-title">الإشعارات</p>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="row-start">
+          <div class="row-icon"><ion-icon name="notifications-outline"></ion-icon></div>
+          <span class="row-label">تفعيل الإشعارات</span>
+        </div>
+        <ion-toggle [checked]="notifications()" (ionChange)="toggleNotifications($event)"></ion-toggle>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language -->
+  <div class="settings-group">
+    <p class="group-title">اللغة</p>
+    <div class="settings-card">
+      <div class="settings-row lang-row">
+        <div class="row-start">
+          <div class="row-icon"><ion-icon name="language-outline"></ion-icon></div>
+          <span class="row-label">لغة التطبيق</span>
+        </div>
+        <div class="lang-toggle">
+          <button [class.active]="language() === 'ar'" (click)="language.set('ar')">العربية</button>
+          <button [class.active]="language() === 'en'" (click)="language.set('en')">English</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Storage -->
+  <div class="settings-group">
+    <p class="group-title">التخزين</p>
+    <div class="settings-card">
+      <div class="settings-row" (click)="clearCache()">
+        <div class="row-start">
+          <div class="row-icon danger-icon"><ion-icon name="trash-outline"></ion-icon></div>
+          <div>
+            <span class="row-label">مسح الذاكرة المؤقتة</span>
+            <span class="row-sub">{{ cacheSize() }}</span>
+          </div>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="row-arrow"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

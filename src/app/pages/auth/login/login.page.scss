@@ -1,0 +1,231 @@
+.login-content {
+  --background: var(--ion-background-color);
+}
+
+.login-hero {
+  height: 260px;
+  position: relative;
+  background:
+    url('https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=800&q=80')
+    center/cover no-repeat;
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(0,77,38,0.9), rgba(0,108,53,0.85));
+  }
+
+  .hero-text {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding-top: env(safe-area-inset-top);
+
+    .hero-icon { font-size: 44px; margin-bottom: 8px; }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 4px;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      margin: 0;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+.login-card {
+  background: var(--ion-card-background);
+  border-radius: 28px 28px 0 0;
+  margin-top: -24px;
+  padding: 28px 24px calc(32px + env(safe-area-inset-bottom));
+  min-height: calc(100vh - 236px);
+  position: relative;
+  z-index: 2;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: 28px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--ion-text-color);
+    margin: 0 0 4px;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ion-text-color);
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--ion-background-color);
+  border: 1.5px solid var(--ion-color-light);
+  border-radius: var(--border-radius-input);
+  padding: 0 14px;
+  transition: border-color var(--transition-fast);
+
+  &:focus-within { border-color: var(--ion-color-primary); }
+  &.error { border-color: var(--ion-color-danger); }
+
+  .input-icon {
+    font-size: 18px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+    margin-inline-end: 8px;
+  }
+}
+
+.custom-input {
+  --background: transparent;
+  --border-width: 0;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+  --placeholder-color: var(--text-tertiary);
+  font-size: 14px;
+  flex: 1;
+}
+
+.eye-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-secondary);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.error-msg {
+  font-size: 11px;
+  color: var(--ion-color-danger);
+  padding-right: 4px;
+}
+
+.login-btn {
+  --background: var(--gradient-primary);
+  --background-activated: var(--ion-color-primary-shade);
+  --border-radius: 16px;
+  --box-shadow: var(--shadow-primary);
+  height: 52px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.demo-btn {
+  --border-radius: 16px;
+  --border-color: var(--ion-color-primary);
+  --color: var(--ion-color-primary);
+  height: 48px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+
+  span {
+    flex: 1;
+    height: 1px;
+    background: var(--ion-color-light);
+  }
+
+  p {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin: 0;
+  }
+}
+
+.social-btns {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1.5px solid var(--ion-color-light);
+  background: var(--ion-card-background);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Tajawal', sans-serif;
+  color: var(--ion-text-color);
+  transition: all var(--transition-fast);
+
+  ion-icon { font-size: 18px; }
+
+  &.google-btn ion-icon { color: #EA4335; }
+  &.apple-btn ion-icon  { color: var(--ion-text-color); }
+}
+
+.register-link {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+
+  span { color: var(--text-secondary); }
+
+  button {
+    background: none;
+    border: none;
+    color: var(--ion-color-primary);
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'Tajawal', sans-serif;
+    cursor: pointer;
+    padding: 0;
+  }
+}

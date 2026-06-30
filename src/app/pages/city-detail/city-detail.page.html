@@ -1,0 +1,126 @@
+<ion-content class="city-detail-content" [fullscreen]="true" *ngIf="city">
+
+  <!-- Hero Image -->
+  <div class="detail-hero">
+    <img [src]="city.images[selectedImageIndex] || city.image" [alt]="city.nameAr" class="hero-img" />
+    <div class="hero-gradient"></div>
+
+    <!-- Toolbar -->
+    <div class="detail-toolbar safe-area-top">
+      <ion-buttons>
+        <ion-back-button defaultHref="/cities" text="" class="back-btn"></ion-back-button>
+      </ion-buttons>
+      <div class="toolbar-actions">
+        <ion-button fill="clear" class="action-btn" (click)="share()">
+          <ion-icon name="share-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" class="action-btn" (click)="toggleFavorite()">
+          <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" [color]="isFavorite ? 'danger' : ''" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Image Thumbnails -->
+    <div class="img-thumbs" *ngIf="city.images.length > 1">
+      <button
+        *ngFor="let img of city.images; let i = index"
+        class="thumb-dot"
+        [class.active]="i === selectedImageIndex"
+        (click)="selectedImageIndex = i">
+      </button>
+    </div>
+
+    <!-- City Header -->
+    <div class="city-header">
+      <div class="city-rating">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ city.rating }}</span>
+        <span class="review-count">({{ city.reviewCount | number }} تقييم)</span>
+      </div>
+      <h1 class="city-name">{{ city.nameAr }}</h1>
+      <div class="city-location">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>{{ city.regionAr }}، المملكة العربية السعودية</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="detail-body">
+
+    <!-- Quick Stats -->
+    <div class="stats-row scroll-x">
+      <div *ngFor="let stat of stats" class="stat-card">
+        <span class="stat-emoji">{{ stat.icon }}</span>
+        <span class="stat-value">{{ stat.value }}+</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="tags-row scroll-x">
+      <ion-chip *ngFor="let tag of city.tagsAr" class="tag-chip">{{ tag }}</ion-chip>
+    </div>
+
+    <!-- Tabs -->
+    <ion-segment [(ngModel)]="activeTab" class="detail-segment">
+      <ion-segment-button value="info"><ion-label>معلومات</ion-label></ion-segment-button>
+      <ion-segment-button value="attractions"><ion-label>معالم</ion-label></ion-segment-button>
+      <ion-segment-button value="events"><ion-label>فعاليات</ion-label></ion-segment-button>
+    </ion-segment>
+
+    <!-- Info Tab -->
+    <div *ngIf="activeTab === 'info'" class="tab-content">
+      <h3 class="section-title">عن {{ city.nameAr }}</h3>
+      <p class="city-desc">{{ city.descriptionAr }}</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <ion-icon name="people-outline" class="info-icon"></ion-icon>
+          <div>
+            <span class="info-label">عدد السكان</span>
+            <span class="info-value">{{ city.population }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <ion-icon name="time-outline" class="info-icon"></ion-icon>
+          <div>
+            <span class="info-label">المنطقة الزمنية</span>
+            <span class="info-value">{{ city.timezone }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <ion-icon name="globe-outline" class="info-icon"></ion-icon>
+          <div>
+            <span class="info-label">المناخ</span>
+            <span class="info-value">{{ city.climateAr }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <ion-icon name="calendar-outline" class="info-icon"></ion-icon>
+          <div>
+            <span class="info-label">أفضل وقت للزيارة</span>
+            <span class="info-value">{{ city.bestTimeToVisitAr }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attractions Tab -->
+    <div *ngIf="activeTab === 'attractions'" class="tab-content">
+      <div *ngIf="attractions.length > 0" class="scroll-x attr-scroll">
+        <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+      </div>
+      <p *ngIf="attractions.length === 0" class="empty-tab">لا توجد معالم مسجلة لهذه المدينة حالياً</p>
+    </div>
+
+    <!-- Events Tab -->
+    <div *ngIf="activeTab === 'events'" class="tab-content">
+      <div *ngIf="events.length > 0" class="events-list">
+        <app-event-card *ngFor="let event of events" [event]="event" variant="list"></app-event-card>
+      </div>
+      <p *ngIf="events.length === 0" class="empty-tab">لا توجد فعاليات قادمة في هذه المدينة حالياً</p>
+    </div>
+  </div>
+
+</ion-content>

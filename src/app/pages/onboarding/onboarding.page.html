@@ -1,0 +1,39 @@
+<ion-content class="onboarding-content" [fullscreen]="true">
+  <!-- Background Image -->
+  <div class="slide-bg">
+    <img [src]="current.image" class="bg-img" [alt]="current.title" />
+    <div class="bg-gradient" [style.background]="current.gradient"></div>
+  </div>
+
+  <!-- Skip Button -->
+  <button class="skip-btn" (click)="skip()" *ngIf="!isLast">تخطي</button>
+
+  <!-- Bottom Sheet -->
+  <div class="content-sheet animate-fadeInUp">
+    <div class="sheet-handle"></div>
+
+    <div class="slide-content">
+      <h1 class="slide-title">{{ current.title }}</h1>
+      <p class="slide-subtitle">{{ current.subtitle }}</p>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots-row">
+      <button
+        *ngFor="let s of slides; let i = index"
+        class="dot"
+        [class.active]="i === currentIndex"
+        (click)="selectSlide(i)">
+      </button>
+    </div>
+
+    <!-- Next / Get Started -->
+    <ion-button
+      class="next-btn"
+      expand="block"
+      (click)="next()">
+      <ion-icon slot="end" [name]="isLast ? 'checkmark-outline' : 'arrow-forward-outline'"></ion-icon>
+      {{ isLast ? 'ابدأ الاستكشاف' : 'التالي' }}
+    </ion-button>
+  </div>
+</ion-content>

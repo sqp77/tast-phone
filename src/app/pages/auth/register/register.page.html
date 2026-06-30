@@ -1,0 +1,102 @@
+<ion-content class="register-content" [fullscreen]="true">
+  <div class="register-header">
+    <button class="back-btn" (click)="goBack()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </button>
+    <div class="header-text">
+      <h1>إنشاء حساب</h1>
+      <p>انضم لمجتمع المستكشفين السعوديين</p>
+    </div>
+    <div class="header-emoji">🌟</div>
+  </div>
+
+  <div class="register-form-wrap">
+    <form [formGroup]="form" (ngSubmit)="register()">
+      <!-- Name Row -->
+      <div class="form-row">
+        <div class="input-group">
+          <label>الاسم الأول</label>
+          <div class="input-wrap" [class.error]="form.get('firstName')?.invalid && form.get('firstName')?.touched">
+            <ion-input formControlName="firstName" type="text" placeholder="سعود" class="custom-input"></ion-input>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>اسم العائلة</label>
+          <div class="input-wrap" [class.error]="form.get('lastName')?.invalid && form.get('lastName')?.touched">
+            <ion-input formControlName="lastName" type="text" placeholder="القحطاني" class="custom-input"></ion-input>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <label>البريد الإلكتروني</label>
+        <div class="input-wrap" [class.error]="form.get('email')?.invalid && form.get('email')?.touched">
+          <ion-input formControlName="email" type="email" placeholder="example@email.com" class="custom-input"></ion-input>
+        </div>
+        <span class="error-msg" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+          بريد إلكتروني غير صالح
+        </span>
+      </div>
+
+      <!-- Username -->
+      <div class="input-group">
+        <label>اسم المستخدم</label>
+        <div class="input-wrap" [class.error]="form.get('username')?.invalid && form.get('username')?.touched">
+          <ion-input formControlName="username" type="text" placeholder="saud_explorer" class="custom-input"></ion-input>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <label>كلمة المرور</label>
+        <div class="input-wrap" [class.error]="form.get('password')?.invalid && form.get('password')?.touched">
+          <ion-input
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="6 أحرف على الأقل"
+            class="custom-input">
+          </ion-input>
+          <button type="button" class="eye-btn" (click)="showPassword = !showPassword">
+            <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="input-group">
+        <label>تأكيد كلمة المرور</label>
+        <div class="input-wrap" [class.error]="form.hasError('passwordMismatch') && form.get('confirmPassword')?.touched">
+          <ion-input
+            formControlName="confirmPassword"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="أعد إدخال كلمة المرور"
+            class="custom-input">
+          </ion-input>
+        </div>
+        <span class="error-msg" *ngIf="form.hasError('passwordMismatch') && form.get('confirmPassword')?.touched">
+          كلمتا المرور غير متطابقتين
+        </span>
+      </div>
+
+      <!-- Terms -->
+      <p class="terms-text">
+        بإنشاء الحساب، أوافق على
+        <a href="#">شروط الاستخدام</a>
+        و<a href="#">سياسة الخصوصية</a>
+      </p>
+
+      <!-- Submit -->
+      <ion-button type="submit" expand="block" class="register-btn" [disabled]="isLoading">
+        <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+        {{ isLoading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب' }}
+      </ion-button>
+
+      <!-- Login Link -->
+      <div class="login-link">
+        <span>لديك حساب بالفعل؟</span>
+        <button type="button" (click)="goBack()">تسجيل الدخول</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

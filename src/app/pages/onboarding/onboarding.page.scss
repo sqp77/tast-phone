@@ -1,0 +1,114 @@
+.onboarding-content {
+  --background: #000;
+  --overflow: hidden;
+}
+
+.slide-bg {
+  position: absolute;
+  inset: 0;
+
+  .bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .bg-gradient {
+    position: absolute;
+    inset: 0;
+    opacity: 0.88;
+    transition: background 0.5s ease;
+  }
+}
+
+.skip-btn {
+  position: absolute;
+  top: calc(20px + env(safe-area-inset-top));
+  left: 20px;
+  z-index: 10;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  font-family: 'Tajawal', sans-serif;
+}
+
+.content-sheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 32px 32px 0 0;
+  padding: 16px 28px calc(32px + env(safe-area-inset-bottom));
+  z-index: 5;
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 2px;
+  margin: 0 auto 24px;
+}
+
+.slide-content {
+  margin-bottom: 28px;
+}
+
+.slide-title {
+  font-size: 30px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 12px;
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.2;
+}
+
+.slide-subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+
+.dots-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+
+  .dot {
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.35);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    width: 8px;
+
+    &.active {
+      background: #fff;
+      width: 28px;
+    }
+  }
+}
+
+.next-btn {
+  --background: rgba(255,255,255,0.95);
+  --color: var(--ion-color-primary);
+  --border-radius: 16px;
+  --box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  font-weight: 800;
+  font-size: 16px;
+  height: 54px;
+}

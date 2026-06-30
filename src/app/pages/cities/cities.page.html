@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>مدن المملكة</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="ابحث عن مدينة..." (ionInput)="onSearch($event)" animated></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="cities-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="isLoading" class="cities-grid">
+    <app-skeleton-card variant="city" [count]="4"></app-skeleton-card>
+  </div>
+
+  <div *ngIf="!isLoading && filtered.length > 0" class="cities-grid">
+    <app-city-card *ngFor="let city of filtered" [city]="city" variant="featured"></app-city-card>
+  </div>
+
+  <app-empty-state
+    *ngIf="!isLoading && filtered.length === 0"
+    icon="map-outline"
+    title="لا توجد مدن"
+    message="جرّب البحث بكلمة مختلفة">
+  </app-empty-state>
+</ion-content>

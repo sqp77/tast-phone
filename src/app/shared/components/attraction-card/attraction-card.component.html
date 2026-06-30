@@ -1,0 +1,29 @@
+<ion-card class="attraction-card">
+  <div class="card-img-wrap">
+    <img [src]="attraction.image" [alt]="attraction.nameAr" class="card-img" loading="lazy" />
+    <div class="card-overlay"></div>
+    <button class="fav-btn" (click)="toggleFavorite($event)">
+      <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" [class.active]="isFavorite"></ion-icon>
+    </button>
+    <div class="price-tag">
+      <span *ngIf="attraction.priceType === 'free'">مجاني</span>
+      <span *ngIf="attraction.priceType === 'paid'">{{ attraction.price }} ر.س</span>
+    </div>
+  </div>
+  <ion-card-content class="card-body">
+    <ion-chip class="category-chip" color="primary">
+      <ion-label>{{ attraction.categoryAr }}</ion-label>
+    </ion-chip>
+    <h3 class="attraction-name">{{ attraction.nameAr }}</h3>
+    <div class="attr-meta">
+      <div class="meta-item">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ attraction.rating }}</span>
+      </div>
+      <div class="meta-item">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ attraction.durationAr }}</span>
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card>

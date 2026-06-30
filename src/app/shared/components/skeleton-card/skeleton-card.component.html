@@ -1,0 +1,13 @@
+<ng-container *ngFor="let _ of items">
+  <ion-card class="skeleton-card skeleton-card--{{ variant }}">
+    <div class="skel-img">
+      <ion-skeleton-text [animated]="true" class="skel-full"></ion-skeleton-text>
+    </div>
+    <ion-card-content>
+      <ion-skeleton-text [animated]="true" class="skel-line skel-short"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" class="skel-line skel-title"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" class="skel-line skel-medium"></ion-skeleton-text>
+      <ion-skeleton-text *ngIf="variant !== 'event'" [animated]="true" class="skel-line skel-short"></ion-skeleton-text>
+    </ion-card-content>
+  </ion-card>
+</ng-container>

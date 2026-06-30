@@ -1,0 +1,15 @@
+<div class="empty-state animate-fadeInUp">
+  <div class="empty-icon-wrap">
+    <ion-icon [name]="icon" class="empty-icon"></ion-icon>
+  </div>
+  <h3 class="empty-title">{{ title }}</h3>
+  <p class="empty-message">{{ message }}</p>
+  <ion-button
+    *ngIf="action && actionLabel"
+    fill="outline"
+    color="primary"
+    class="action-btn"
+    (click)="action()">
+    {{ actionLabel }}
+  </ion-button>
+</div>

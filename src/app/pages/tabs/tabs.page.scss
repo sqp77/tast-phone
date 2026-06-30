@@ -1,0 +1,80 @@
+.premium-tab-bar {
+  --background: var(--ion-card-background);
+  --border: none;
+  border-top: none !important;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.08);
+  border-radius: 28px 28px 0 0;
+  padding: 4px 0 env(safe-area-inset-bottom, 0);
+  height: calc(64px + env(safe-area-inset-bottom, 0));
+}
+
+.tab-btn {
+  --color: var(--ion-color-medium);
+  --color-selected: var(--ion-color-primary);
+  --ripple-color: transparent;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all var(--transition-fast);
+
+  ion-label { margin-top: 2px; }
+}
+
+.tab-icon {
+  font-size: 24px;
+  transition: transform var(--transition-spring);
+}
+
+.tab-btn.tab-selected .tab-icon {
+  transform: translateY(-2px);
+}
+
+// ─── Center Trip Button ──────────────────────────────────────────────────────
+.tab-center {
+  .center-bubble {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-primary);
+    margin-top: -20px;
+    margin-bottom: 4px;
+    transition: transform var(--transition-spring);
+
+    ion-icon {
+      font-size: 26px;
+      color: #fff;
+    }
+  }
+
+  ion-label { color: var(--ion-color-primary); font-weight: 700; }
+
+  &.tab-selected .center-bubble {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(0, 108, 53, 0.45);
+  }
+}
+
+// ─── Favorites Badge ─────────────────────────────────────────────────────────
+.fav-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fav-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  --background: var(--ion-color-danger);
+  --color: #fff;
+  font-size: 9px;
+  height: 16px;
+  min-width: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+}

@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>الإشعارات</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="markAll()" *ngIf="notif.unreadCount() > 0">
+        <ion-icon name="checkmark-done-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="notif-content">
+
+  <div *ngIf="notif.notifications().length === 0" class="empty-notif">
+    <div class="empty-icon">🔔</div>
+    <h3>لا توجد إشعارات</h3>
+    <p>ستظهر هنا إشعارات التطبيق والفعاليات</p>
+  </div>
+
+  <div *ngIf="notif.notifications().length > 0" class="notif-list">
+    <ion-item-sliding *ngFor="let n of notif.notifications()" (click)="markRead(n)">
+      <ion-item class="notif-item" [class.unread]="!n.isRead">
+        <div class="notif-icon" slot="start">{{ notifIcon(n.type) }}</div>
+        <ion-label>
+          <h3 class="notif-title">{{ n.titleAr }}</h3>
+          <p class="notif-body">{{ n.bodyAr }}</p>
+          <p class="notif-time">{{ n.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+        </ion-label>
+        <div class="unread-dot" *ngIf="!n.isRead" slot="end"></div>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="danger" (click)="delete(n.id)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </div>
+
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/profile"></ion-back-button>
+    </ion-buttons>
+    <ion-title>عن التطبيق</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="about-content">
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <div class="app-icon">🕌</div>
+    <h1 class="app-name">Saudi Explorer</h1>
+    <p class="app-tagline">اكتشف جمال المملكة العربية السعودية</p>
+    <span class="app-version-badge">الإصدار 1.0.0</span>
+  </div>
+
+  <!-- About Text -->
+  <div class="about-section">
+    <h3>عن التطبيق</h3>
+    <p>
+      Saudi Explorer هو دليلك السياحي الشامل لاكتشاف جمال المملكة العربية السعودية.
+      نوفر لك أفضل المعلومات عن المدن، المعالم السياحية، الفعاليات، والمطاعم في جميع
+      أنحاء المملكة، لتجعل رحلتك تجربة لا تُنسى.
+    </p>
+  </div>
+
+  <!-- Features -->
+  <div class="about-section">
+    <h3>المميزات</h3>
+    <div class="features-list">
+      <div *ngFor="let f of features" class="feature-item">
+        <span class="feature-emoji">{{ f.emoji }}</span>
+        <div>
+          <span class="feature-title">{{ f.title }}</span>
+          <span class="feature-desc">{{ f.desc }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Links -->
+  <div class="about-section">
+    <h3>تواصل معنا</h3>
+    <div class="social-links">
+      <button class="social-link">
+        <ion-icon name="globe-outline"></ion-icon>
+        <span>saudiexplorer.sa</span>
+      </button>
+      <button class="social-link">
+        <ion-icon name="mail-outline"></ion-icon>
+        <span>hello&#64;saudiexplorer.sa</span>
+      </button>
+      <button class="social-link">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <span>&#64;SaudiExplorer</span>
+      </button>
+      <button class="social-link">
+        <ion-icon name="logo-instagram"></ion-icon>
+        <span>&#64;SaudiExplorer</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Rate Button -->
+  <div class="rate-section">
+    <ion-button expand="block" class="rate-btn">
+      <ion-icon name="star-outline" slot="start"></ion-icon>
+      قيّم التطبيق ⭐
+    </ion-button>
+  </div>
+
+  <p class="copyright">© 2025 Saudi Explorer. جميع الحقوق محفوظة</p>
+
+</ion-content>

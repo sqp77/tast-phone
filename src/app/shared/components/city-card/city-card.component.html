@@ -1,0 +1,29 @@
+<ion-card class="city-card" [class]="'city-card--' + variant" (click)="navigate()">
+  <div class="card-image-wrap">
+    <img [src]="city.image" [alt]="city.nameAr" class="card-img" loading="lazy" />
+    <div class="card-overlay"></div>
+    <button class="fav-btn" (click)="toggleFavorite($event)">
+      <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" [class.active]="isFavorite"></ion-icon>
+    </button>
+    <ion-badge *ngIf="city.featured" class="featured-badge">مميزة</ion-badge>
+  </div>
+  <ion-card-content class="card-body">
+    <div class="card-meta">
+      <ion-icon name="location-outline" class="loc-icon"></ion-icon>
+      <span class="region">{{ city.regionAr }}</span>
+    </div>
+    <h3 class="city-name">{{ city.nameAr }}</h3>
+    <p class="city-desc" *ngIf="variant !== 'compact'">{{ city.shortDescAr }}</p>
+    <div class="card-footer">
+      <div class="rating">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ city.rating }}</span>
+        <span class="reviews">({{ city.reviewCount | number }})</span>
+      </div>
+      <div class="best-time">
+        <span class="time-label">أفضل وقت:</span>
+        <span>{{ city.bestTimeToVisitAr }}</span>
+      </div>
+    </div>
+  </ion-card-content>
+</ion-card>

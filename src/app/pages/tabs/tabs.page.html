@@ -1,0 +1,36 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom" class="premium-tab-bar">
+
+    <ion-tab-button tab="home" href="/tabs/home" class="tab-btn">
+      <ion-icon name="home-outline" class="tab-icon"></ion-icon>
+      <ion-label>الرئيسية</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="explore" href="/tabs/explore" class="tab-btn">
+      <ion-icon name="compass-outline" class="tab-icon"></ion-icon>
+      <ion-label>استكشف</ion-label>
+    </ion-tab-button>
+
+    <!-- Center FAB-style button -->
+    <ion-tab-button tab="trips" href="/tabs/trips" class="tab-btn tab-center">
+      <div class="center-bubble">
+        <ion-icon name="map-outline"></ion-icon>
+      </div>
+      <ion-label>رحلاتي</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="favorites" href="/tabs/favorites" class="tab-btn">
+      <div class="fav-wrapper">
+        <ion-icon name="heart-outline" class="tab-icon"></ion-icon>
+        <ion-badge *ngIf="favCount() > 0" class="fav-badge">{{ favCount() }}</ion-badge>
+      </div>
+      <ion-label>المفضلة</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="profile" href="/tabs/profile" class="tab-btn">
+      <ion-icon name="person-outline" class="tab-icon"></ion-icon>
+      <ion-label>حسابي</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+</ion-tabs>

@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-searchbar
+      [(ngModel)]="query"
+      placeholder="ابحث عن مدينة، معلم أو فعالية..."
+      (ionInput)="onSearch($event)"
+      (ionClear)="clear()"
+      autofocus
+      animated
+      class="main-search">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="search-content">
+
+  <!-- Empty / Trending State -->
+  <div *ngIf="!hasSearched && !isSearching" class="discover-state">
+    <div class="trending-section">
+      <h3 class="section-label">🔥 الأكثر بحثاً</h3>
+      <div class="chips-wrap">
+        <ion-chip *ngFor="let t of trending" class="trend-chip" (click)="doSearch(t)">
+          <ion-icon name="search-outline"></ion-icon>
+          <ion-label>{{ t }}</ion-label>
+        </ion-chip>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Skeleton -->
+  <div *ngIf="isSearching" class="results-wrap">
+    <app-skeleton-card variant="article" [count]="4"></app-skeleton-card>
+  </div>
+
+  <!-- Results -->
+  <div *ngIf="hasSearched && !isSearching" class="results-wrap">
+
+    <!-- No Results -->
+    <app-empty-state
+      *ngIf="!hasResults"
+      icon="search-outline"
+      title="لا توجد نتائج"
+      [message]="'لم نجد نتائج لـ «' + query + '»'">
+    </app-empty-state>
+
+    <!-- Cities Results -->
+    <div *ngIf="cities.length > 0" class="result-section">
+      <h3 class="result-label">المدن ({{ cities.length }})</h3>
+      <app-city-card *ngFor="let city of cities" [city]="city" variant="compact"></app-city-card>
+    </div>
+
+    <!-- Attractions Results -->
+    <div *ngIf="attractions.length > 0" class="result-section">
+      <h3 class="result-label">المعالم ({{ attractions.length }})</h3>
+      <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+    </div>
+
+    <!-- Events Results -->
+    <div *ngIf="events.length > 0" class="result-section">
+      <h3 class="result-label">الفعاليات ({{ events.length }})</h3>
+      <app-event-card *ngFor="let event of events" [event]="event" variant="list"></app-event-card>
+    </div>
+  </div>
+
+</ion-content>

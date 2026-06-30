@@ -1,0 +1,49 @@
+<ion-app>
+  <!-- Side Drawer Menu -->
+  <ion-menu contentId="main-content" menuId="main-menu" side="end" type="overlay">
+    <ion-header class="menu-header">
+      <ion-toolbar>
+        <div class="menu-profile" *ngIf="isAuthenticated()">
+          <ion-avatar class="profile-avatar">
+            <img [src]="user()?.avatar || 'assets/icon/default-avatar.png'" alt="profile" />
+          </ion-avatar>
+          <div class="profile-info">
+            <h3>{{ user()?.firstName }} {{ user()?.lastName }}</h3>
+            <p>{{ user()?.email }}</p>
+          </div>
+        </div>
+        <div class="menu-logo" *ngIf="!isAuthenticated()">
+          <div class="logo-circle">
+            <span>🕌</span>
+          </div>
+          <h2>Saudi Explorer</h2>
+        </div>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="menu-content">
+      <ion-list lines="none">
+        <ion-menu-toggle *ngFor="let link of menuLinks">
+          <ion-item
+            class="menu-item"
+            button
+            (click)="navigate(link.url)"
+            detail="false">
+            <ion-icon slot="start" [name]="link.icon" class="menu-icon"></ion-icon>
+            <ion-label>{{ link.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+      <div class="menu-footer">
+        <ion-item class="menu-item logout-item" button (click)="logout()" detail="false" lines="none">
+          <ion-icon slot="start" name="log-out" class="menu-icon logout-icon"></ion-icon>
+          <ion-label>تسجيل الخروج</ion-label>
+        </ion-item>
+      </div>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Main Content -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+</ion-app>

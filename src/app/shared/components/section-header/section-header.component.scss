@@ -1,0 +1,44 @@
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 20px 12px;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ion-text-color);
+  margin: 0 0 2px;
+  font-family: 'Cairo', sans-serif;
+}
+
+.header-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.see-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--ion-color-primary);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+
+  .arrow-icon {
+    font-size: 16px;
+    transform: scaleX(-1);
+  }
+}
