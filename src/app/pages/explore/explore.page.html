@@ -4,59 +4,90 @@
   </ion-toolbar>
   <ion-toolbar class="search-toolbar">
     <ion-searchbar
-      placeholder="ابحث عن أي شيء..."
-      (ionInput)="onSearch($event)"
+      placeholder="ابحث عن مدن، معالم، فنادق..."
       [value]="searchQuery"
+      (ionInput)="onSearch($event)"
       animated
       class="explore-search">
     </ion-searchbar>
   </ion-toolbar>
-  <ion-toolbar class="segment-toolbar">
-    <ion-segment [value]="activeSegment" (ionChange)="onSegmentChange($event)">
-      <ion-segment-button value="cities">
-        <ion-label>المدن</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="attractions">
-        <ion-label>المعالم</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="events">
-        <ion-label>الفعاليات</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div class="seg-strip">
+    <div class="scroll-x seg-row">
+      <button *ngFor="let seg of segments"
+              class="seg-pill"
+              [class.active]="activeSegment === seg.value"
+              (click)="activeSegment = seg.value">
+        <span class="seg-icon">{{ seg.icon }}</span>
+        <span class="seg-lbl">{{ seg.label }}</span>
+      </button>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content class="explore-content">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content pullingText="اسحب للتحديث" refreshingText="جاري التحديث..."></ion-refresher-content>
   </ion-refresher>
 
-  <!-- Cities Grid -->
-  <div *ngIf="activeSegment === 'cities'" class="content-grid">
+  <div class="results-bar" *ngIf="!isLoading">
+    <span class="results-count">{{ activeCount }} نتيجة</span>
+  </div>
+
+  <!-- ─── Cities ──────────────────────────────────────────────────────────── -->
+  <div *ngIf="activeSegment === 'cities'">
     <ng-container *ngIf="!isLoading; else skelLoading">
-      <app-city-card *ngFor="let city of cities" [city]="city" variant="featured"></app-city-card>
-      <app-empty-state *ngIf="!hasResults" icon="map-outline" title="لا توجد مدن" message="جرّب البحث بكلمة مختلفة"></app-empty-state>
+      <div class="cities-grid">
+        <app-city-card *ngFor="let city of cities" [city]="city" variant="featured"></app-city-card>
+      </div>
+      <app-empty-state *ngIf="!hasResults" icon="map-outline" title="لا توجد مدن" message="جرّب كلمة بحث مختلفة"></app-empty-state>
     </ng-container>
   </div>
 
-  <!-- Attractions Grid -->
-  <div *ngIf="activeSegment === 'attractions'" class="content-grid attr-grid">
+  <!-- ─── Attractions ──────────────────────────────────────────────────────── -->
+  <div *ngIf="activeSegment === 'attractions'">
     <ng-container *ngIf="!isLoading; else skelLoading">
-      <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+      <div class="scroll-x px-16">
+        <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+      </div>
       <app-empty-state *ngIf="!hasResults" icon="compass-outline" title="لا توجد معالم" message="جرّب فئة مختلفة"></app-empty-state>
     </ng-container>
   </div>
 
-  <!-- Events List -->
-  <div *ngIf="activeSegment === 'events'" class="content-list">
+  <!-- ─── Events ───────────────────────────────────────────────────────────── -->
+  <div *ngIf="activeSegment === 'events'">
     <ng-container *ngIf="!isLoading; else skelLoading">
-      <app-event-card *ngFor="let event of events" [event]="event" variant="list"></app-event-card>
-      <app-empty-state *ngIf="!hasResults" icon="calendar-outline" title="لا توجد فعاليات" message="لا توجد فعاليات في هذه الفترة"></app-empty-state>
+      <div class="events-list">
+        <app-event-card *ngFor="let event of events" [event]="event" variant="list"></app-event-card>
+      </div>
+      <app-empty-state *ngIf="!hasResults" icon="calendar-outline" title="لا توجد فعاليات" message="لا توجد فعاليات متاحة"></app-empty-state>
+    </ng-container>
+  </div>
+
+  <!-- ─── Hotels ───────────────────────────────────────────────────────────── -->
+  <div *ngIf="activeSegment === 'hotels'">
+    <ng-container *ngIf="!isLoading; else skelLoading">
+      <div class="scroll-x px-16">
+        <app-hotel-card *ngFor="let hotel of hotels" [hotel]="hotel"></app-hotel-card>
+      </div>
+      <app-empty-state *ngIf="!hasResults" icon="bed-outline" title="لا توجد فنادق" message="جرّب البحث بمدينة أخرى"></app-empty-state>
+    </ng-container>
+  </div>
+
+  <!-- ─── Restaurants ──────────────────────────────────────────────────────── -->
+  <div *ngIf="activeSegment === 'restaurants'">
+    <ng-container *ngIf="!isLoading; else skelLoading">
+      <div class="scroll-x px-16">
+        <app-restaurant-card *ngFor="let rest of restaurants" [restaurant]="rest"></app-restaurant-card>
+      </div>
+      <app-empty-state *ngIf="!hasResults" icon="restaurant-outline" title="لا توجد مطاعم" message="جرّب البحث بمطبخ مختلف"></app-empty-state>
     </ng-container>
   </div>
 
   <ng-template #skelLoading>
-    <app-skeleton-card variant="article" [count]="4"></app-skeleton-card>
+    <div class="skel-wrap">
+      <app-skeleton-card variant="city" [count]="4"></app-skeleton-card>
+    </div>
   </ng-template>
 
+  <div class="bottom-space"></div>
 </ion-content>

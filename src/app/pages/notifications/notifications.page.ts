@@ -42,12 +42,12 @@ export class NotificationsPage {
   }
 
   notifIcon(type: string): string {
-    const icons: Record<string, string> = {
-      event: '🎪',
-      offer: '💎',
-      update: '🗺️',
-      system: '⭐',
-    };
+    const icons: Record<string, string> = { event: '🎪', offer: '💎', update: '🗺️', system: '⭐' };
     return icons[type] ?? '🔔';
+  }
+
+  typeLabel(type: string): string {
+    const labels: Record<string, string> = { event: 'فعالية', offer: 'عرض', update: 'تحديث', system: 'نظام' };
+    return labels[type] ?? type;
   }
 }

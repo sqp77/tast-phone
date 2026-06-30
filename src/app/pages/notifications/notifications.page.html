@@ -1,9 +1,9 @@
-<ion-header>
+<ion-header class="notif-header">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button text="" defaultHref="/tabs/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>الإشعارات</ion-title>
+    <ion-title class="page-title">الإشعارات</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="markAll()" *ngIf="notif.unreadCount() > 0">
         <ion-icon name="checkmark-done-outline" slot="icon-only"></ion-icon>
@@ -14,22 +14,33 @@
 
 <ion-content class="notif-content">
 
+  <!-- Empty state -->
   <div *ngIf="notif.notifications().length === 0" class="empty-notif">
     <div class="empty-icon">🔔</div>
     <h3>لا توجد إشعارات</h3>
-    <p>ستظهر هنا إشعارات التطبيق والفعاليات</p>
+    <p>ستظهر هنا إشعارات التطبيق والفعاليات والعروض</p>
   </div>
 
-  <div *ngIf="notif.notifications().length > 0" class="notif-list">
+  <!-- Unread banner -->
+  <div class="unread-banner" *ngIf="notif.unreadCount() > 0">
+    <span class="unread-text">{{ notif.unreadCount() }} إشعار جديد</span>
+    <button class="mark-all-btn" (click)="markAll()">تعليم الكل مقروء</button>
+  </div>
+
+  <!-- List -->
+  <div class="notif-list" *ngIf="notif.notifications().length > 0">
     <ion-item-sliding *ngFor="let n of notif.notifications()" (click)="markRead(n)">
       <ion-item class="notif-item" [class.unread]="!n.isRead">
-        <div class="notif-icon" slot="start">{{ notifIcon(n.type) }}</div>
-        <ion-label>
+        <div class="notif-icon-wrap" slot="start">
+          <span class="notif-emoji">{{ notifIcon(n.type) }}</span>
+          <span class="unread-dot" *ngIf="!n.isRead"></span>
+        </div>
+        <ion-label class="notif-label">
           <h3 class="notif-title">{{ n.titleAr }}</h3>
           <p class="notif-body">{{ n.bodyAr }}</p>
-          <p class="notif-time">{{ n.createdAt | date:'dd/MM/yyyy HH:mm' }}</p>
+          <p class="notif-time">{{ n.createdAt | date:'d MMM yyyy · HH:mm' }}</p>
         </ion-label>
-        <div class="unread-dot" *ngIf="!n.isRead" slot="end"></div>
+        <span class="type-chip type-{{ n.type }}" slot="end">{{ typeLabel(n.type) }}</span>
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option color="danger" (click)="delete(n.id)">
@@ -39,4 +50,5 @@
     </ion-item-sliding>
   </div>
 
+  <div class="bottom-space"></div>
 </ion-content>

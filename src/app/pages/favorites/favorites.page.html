@@ -1,57 +1,84 @@
-<ion-header>
+<ion-header class="fav-header">
   <ion-toolbar>
-    <ion-title>المفضلة</ion-title>
+    <ion-title class="page-title">المفضلة</ion-title>
+    <div slot="end" class="total-badge" *ngIf="totalCount > 0">
+      <ion-icon name="heart-outline"></ion-icon>
+      <span>{{ totalCount }}</span>
+    </div>
   </ion-toolbar>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="activeTab">
-      <ion-segment-button value="cities">
-        <ion-label>المدن ({{ favCities.length }})</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="attractions">
-        <ion-label>المعالم ({{ favAttractions.length }})</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="events">
-        <ion-label>الفعاليات ({{ favEvents.length }})</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div class="tab-strip">
+    <div class="scroll-x tab-row">
+      <button *ngFor="let tab of tabs"
+              class="tab-pill"
+              [class.active]="activeTab === tab.value"
+              (click)="activeTab = tab.value">
+        <span class="tab-icon">{{ tab.icon }}</span>
+        <span class="tab-lbl">{{ tab.label }}</span>
+        <span class="tab-count" *ngIf="countFor(tab.value) > 0">{{ countFor(tab.value) }}</span>
+      </button>
+    </div>
+  </div>
 </ion-header>
 
 <ion-content class="fav-content">
   <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content pullingText="اسحب للتحديث" refreshingText="جاري التحديث..."></ion-refresher-content>
   </ion-refresher>
 
   <!-- Cities -->
-  <div *ngIf="activeTab === 'cities'" class="fav-list">
-    <app-city-card *ngFor="let city of favCities" [city]="city" variant="featured"></app-city-card>
-    <app-empty-state
-      *ngIf="favCities.length === 0"
-      icon="heart-outline"
-      title="لا توجد مدن مفضلة"
-      message="أضف مدناً لقائمة المفضلة من صفحة المدن">
+  <div *ngIf="activeTab === 'cities'" class="fav-section">
+    <div class="fav-list" *ngIf="favCities.length > 0">
+      <app-city-card *ngFor="let city of favCities" [city]="city" variant="featured"></app-city-card>
+    </div>
+    <app-empty-state *ngIf="currentEmpty"
+      icon="heart-outline" title="لا توجد مدن مفضلة"
+      message="أضف مدناً من صفحة المدن">
     </app-empty-state>
   </div>
 
   <!-- Attractions -->
-  <div *ngIf="activeTab === 'attractions'" class="fav-list">
-    <app-attraction-card *ngFor="let attr of favAttractions" [attraction]="attr"></app-attraction-card>
-    <app-empty-state
-      *ngIf="favAttractions.length === 0"
-      icon="heart-outline"
-      title="لا توجد معالم مفضلة"
+  <div *ngIf="activeTab === 'attractions'" class="fav-section">
+    <div class="scroll-x px-16" *ngIf="favAttractions.length > 0">
+      <app-attraction-card *ngFor="let attr of favAttractions" [attraction]="attr"></app-attraction-card>
+    </div>
+    <app-empty-state *ngIf="currentEmpty"
+      icon="heart-outline" title="لا توجد معالم مفضلة"
       message="أضف معالم من صفحة الاستكشاف">
     </app-empty-state>
   </div>
 
   <!-- Events -->
-  <div *ngIf="activeTab === 'events'" class="fav-list">
-    <app-event-card *ngFor="let event of favEvents" [event]="event" variant="list"></app-event-card>
-    <app-empty-state
-      *ngIf="favEvents.length === 0"
-      icon="heart-outline"
-      title="لا توجد فعاليات مفضلة"
+  <div *ngIf="activeTab === 'events'" class="fav-section">
+    <div class="fav-list" *ngIf="favEvents.length > 0">
+      <app-event-card *ngFor="let event of favEvents" [event]="event" variant="list"></app-event-card>
+    </div>
+    <app-empty-state *ngIf="currentEmpty"
+      icon="heart-outline" title="لا توجد فعاليات مفضلة"
       message="أضف فعاليات من صفحة الفعاليات">
     </app-empty-state>
   </div>
+
+  <!-- Hotels -->
+  <div *ngIf="activeTab === 'hotels'" class="fav-section">
+    <div class="scroll-x px-16" *ngIf="favHotels.length > 0">
+      <app-hotel-card *ngFor="let hotel of favHotels" [hotel]="hotel"></app-hotel-card>
+    </div>
+    <app-empty-state *ngIf="currentEmpty"
+      icon="heart-outline" title="لا توجد فنادق مفضلة"
+      message="أضف فنادق من صفحة الفنادق">
+    </app-empty-state>
+  </div>
+
+  <!-- Restaurants -->
+  <div *ngIf="activeTab === 'restaurants'" class="fav-section">
+    <div class="scroll-x px-16" *ngIf="favRestaurants.length > 0">
+      <app-restaurant-card *ngFor="let rest of favRestaurants" [restaurant]="rest"></app-restaurant-card>
+    </div>
+    <app-empty-state *ngIf="currentEmpty"
+      icon="heart-outline" title="لا توجد مطاعم مفضلة"
+      message="أضف مطاعم من صفحة المطاعم">
+    </app-empty-state>
+  </div>
+
+  <div class="bottom-space"></div>
 </ion-content>

@@ -1,51 +1,91 @@
+.notif-header {
+  ion-toolbar { --background: var(--ion-card-background); }
+  .page-title { font-weight: 800; font-size: 20px; font-family: 'Cairo', sans-serif; }
+}
+
 .notif-content { --background: var(--ion-background-color); }
 
+// ─── Empty ────────────────────────────────────────────────────────────────────
 .empty-notif {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; flex-direction: column; align-items: center;
   justify-content: center;
   padding: 80px 32px;
   text-align: center;
-
-  .empty-icon { font-size: 56px; margin-bottom: 16px; }
-  h3 { font-size: 18px; font-weight: 700; color: var(--ion-text-color); margin: 0 0 8px; }
-  p { font-size: 14px; color: var(--text-secondary); margin: 0; }
+  .empty-icon { font-size: 64px; margin-bottom: 16px; }
+  h3 { font-size: 18px; font-weight: 700; margin: 0 0 8px; font-family: 'Cairo', sans-serif; }
+  p { font-size: 14px; color: var(--text-secondary); margin: 0; line-height: 1.6; }
 }
 
-.notif-list { padding: 8px 0; }
+// ─── Unread Banner ────────────────────────────────────────────────────────────
+.unread-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--color-green-light);
+  margin: 12px 16px;
+  border-radius: 14px;
+  padding: 10px 16px;
+
+  .unread-text { font-size: 13px; font-weight: 700; color: var(--ion-color-primary); }
+  .mark-all-btn {
+    font-size: 12px; font-weight: 600;
+    color: var(--ion-color-primary);
+    background: none; border: none; cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Tajawal', sans-serif;
+  }
+}
+
+// ─── List & Items ─────────────────────────────────────────────────────────────
+.notif-list { padding: 4px 0; }
 
 .notif-item {
   --background: var(--ion-card-background);
-  --padding-start: 12px;
+  --padding-start: 14px;
   --inner-padding-end: 12px;
-  margin: 4px 12px;
-  border-radius: 14px;
+  margin: 6px 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow-soft);
 
-  &.unread { --background: var(--color-green-light); }
+  &.unread { --background: rgba(0,108,53,0.06); }
+}
 
-  .notif-icon {
-    font-size: 24px;
-    width: 44px;
-    height: 44px;
-    background: var(--ion-background-color);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-inline-end: 12px;
-  }
+.notif-icon-wrap {
+  position: relative;
+  width: 46px; height: 46px;
+  background: var(--ion-background-color);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-inline-end: 12px;
+  flex-shrink: 0;
 
-  .notif-title { font-size: 14px; font-weight: 700; color: var(--ion-text-color); }
-  .notif-body  { font-size: 13px; color: var(--text-secondary); white-space: normal; }
-  .notif-time  { font-size: 11px; color: var(--text-tertiary); margin-top: 4px; }
-
+  .notif-emoji { font-size: 22px; }
   .unread-dot {
-    width: 8px;
-    height: 8px;
+    position: absolute; top: -2px; right: -2px;
+    width: 10px; height: 10px;
     border-radius: 50%;
     background: var(--ion-color-primary);
-    flex-shrink: 0;
+    border: 2px solid var(--ion-card-background);
   }
 }
+
+.notif-label {
+  padding: 12px 0;
+  .notif-title { font-size: 14px; font-weight: 700; color: var(--ion-text-color); margin-bottom: 3px; }
+  .notif-body  { font-size: 13px; color: var(--text-secondary); white-space: normal; line-height: 1.5; }
+  .notif-time  { font-size: 11px; color: var(--text-tertiary); margin-top: 5px; }
+}
+
+.type-chip {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 12px;
+
+  &.type-event  { background: rgba(33,150,243,0.12); color: #2196F3; }
+  &.type-offer  { background: rgba(201,162,39,0.12); color: var(--color-gold); }
+  &.type-update { background: rgba(0,108,53,0.12);   color: var(--ion-color-primary); }
+  &.type-system { background: rgba(156,39,176,0.12); color: #9C27B0; }
+}
+
+.bottom-space { height: 32px; }

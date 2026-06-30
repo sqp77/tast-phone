@@ -1,8 +1,37 @@
+.cities-header {
+  ion-toolbar { --background: var(--ion-card-background); }
+  .page-title { font-weight: 800; font-size: 20px; font-family: 'Cairo', sans-serif; }
+  .search-toolbar { --background: var(--ion-card-background); --padding-bottom: 0; }
+  .city-search {
+    --background: var(--ion-background-color);
+    --border-radius: 14px;
+    --box-shadow: none;
+    padding-bottom: 8px;
+  }
+}
+
 .cities-content { --background: var(--ion-background-color); }
 
-.cities-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
+.stats-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0;
+  margin: 16px;
+  background: var(--ion-card-background);
+  border-radius: 18px;
+  padding: 14px 0;
+  box-shadow: var(--shadow-soft);
+
+  .stat-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    .stat-num { font-size: 22px; font-weight: 900; color: var(--ion-color-primary); font-family: 'Cairo', sans-serif; }
+    .stat-lbl { font-size: 11px; color: var(--text-secondary); font-weight: 600; }
+  }
+  .stat-divider { width: 1px; height: 32px; background: var(--ion-color-light); }
 }
+
+.cities-grid {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 4px 16px 16px;
+}
+
+.bottom-space { height: 32px; }
