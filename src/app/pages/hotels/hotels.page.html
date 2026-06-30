@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>الفنادق المميزة</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="ابحث عن فندق..."
+      (ionInput)="onSearch($event)"
+      animated>
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="hotels-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Categories -->
+  <div class="cats-row scroll-x">
+    <ion-chip
+      *ngFor="let cat of categories"
+      [class.active-chip]="activeCategory === cat.id"
+      (click)="selectCategory(cat.id)">
+      <ion-label>{{ cat.label }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- Hero Stats -->
+  <div class="hero-stats">
+    <div class="stat-item">
+      <span class="stat-num">{{ filtered.length }}</span>
+      <span class="stat-lbl">فندق متاح</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <span class="stat-num">4+</span>
+      <span class="stat-lbl">مدن</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <span class="stat-num">⭐ 4.7</span>
+      <span class="stat-lbl">متوسط التقييم</span>
+    </div>
+  </div>
+
+  <!-- Hotels Grid -->
+  <div class="hotels-grid" *ngIf="filtered.length > 0">
+    <app-hotel-card *ngFor="let hotel of filtered" [hotel]="hotel"></app-hotel-card>
+  </div>
+
+  <app-empty-state
+    *ngIf="filtered.length === 0"
+    icon="bed-outline"
+    title="لا توجد فنادق"
+    message="جرّب البحث بكلمة مختلفة">
+  </app-empty-state>
+
+  <div class="bottom-space"></div>
+</ion-content>

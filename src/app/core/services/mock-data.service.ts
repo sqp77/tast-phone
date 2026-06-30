@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { City } from '../models/city.model';
 import { Attraction } from '../models/attraction.model';
 import { TourismEvent } from '../models/event.model';
+import { Hotel } from '../models/hotel.model';
+import { Restaurant } from '../models/restaurant.model';
 
 @Injectable({ providedIn: 'root' })
 export class MockDataService {
@@ -498,5 +500,193 @@ export class MockDataService {
       a.nameAr.includes(query) || a.nameEn.toLowerCase().includes(q) ||
       a.categoryAr.includes(query) || a.category.toLowerCase().includes(q)
     );
+  }
+
+  readonly hotels: Hotel[] = [
+    {
+      id: 'h1', nameAr: 'فندق رافلز الرياض', nameEn: 'Raffles Riyadh',
+      descriptionAr: 'فندق فاخر يجمع بين الرقي العالمي والضيافة العربية الأصيلة في قلب الرياض. يتميز بغرف فاخرة ومطاعم راقية وسبا عالمي.',
+      descriptionEn: 'A luxury hotel combining world-class elegance with authentic Arab hospitality in the heart of Riyadh. Features luxurious rooms, fine dining and a world-class spa.',
+      image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'],
+      cityId: '1', cityNameAr: 'الرياض', cityNameEn: 'Riyadh',
+      address: 'King Fahd Road, Riyadh', addressAr: 'طريق الملك فهد، الرياض',
+      stars: 5, rating: 4.9, reviewCount: 3200,
+      pricePerNight: 1800, currency: 'SAR',
+      amenities: [
+        { icon: 'wifi-outline', nameAr: 'واي فاي مجاني', nameEn: 'Free WiFi' },
+        { icon: 'fitness-outline', nameAr: 'مركز لياقة', nameEn: 'Fitness Center' },
+        { icon: 'water-outline', nameAr: 'مسبح', nameEn: 'Swimming Pool' },
+        { icon: 'restaurant-outline', nameAr: 'مطعم', nameEn: 'Restaurant' },
+        { icon: 'car-outline', nameAr: 'موقف مجاني', nameEn: 'Free Parking' },
+      ],
+      amenitiesAr: ['واي فاي', 'مركز لياقة', 'مسبح', 'مطعم', 'موقف'],
+      category: 'luxury',
+      coordinates: { lat: 24.7136, lng: 46.6753 },
+      featured: true, isFavorite: false,
+      checkIn: '3:00 PM', checkOut: '12:00 PM',
+      tags: ['luxury', 'spa', 'dining'], tagsAr: ['فاخر', 'سبا', 'مطاعم'],
+    },
+    {
+      id: 'h2', nameAr: 'فور سيزونز جدة', nameEn: 'Four Seasons Jeddah',
+      descriptionAr: 'يقع على ساحل البحر الأحمر مباشرة، يوفر تجربة إقامة لا مثيل لها مع إطلالات مذهلة على البحر وخدمات عالمية المستوى.',
+      descriptionEn: 'Located directly on the Red Sea shore, offering an unrivaled stay with stunning sea views and world-class services.',
+      image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80'],
+      cityId: '2', cityNameAr: 'جدة', cityNameEn: 'Jeddah',
+      address: 'Corniche Road, Jeddah', addressAr: 'طريق الكورنيش، جدة',
+      stars: 5, rating: 4.9, reviewCount: 5600,
+      pricePerNight: 2200, currency: 'SAR',
+      amenities: [
+        { icon: 'wifi-outline', nameAr: 'واي فاي مجاني', nameEn: 'Free WiFi' },
+        { icon: 'water-outline', nameAr: 'مسبح بحري', nameEn: 'Sea Pool' },
+        { icon: 'restaurant-outline', nameAr: 'مطاعم راقية', nameEn: 'Fine Dining' },
+        { icon: 'fitness-outline', nameAr: 'سبا فاخر', nameEn: 'Luxury Spa' },
+      ],
+      amenitiesAr: ['واي فاي', 'مسبح بحري', 'مطاعم', 'سبا'],
+      category: 'luxury',
+      coordinates: { lat: 21.5433, lng: 39.1728 },
+      featured: true, isFavorite: false,
+      checkIn: '3:00 PM', checkOut: '12:00 PM',
+      tags: ['seaview', 'luxury', 'beach'], tagsAr: ['إطلالة بحر', 'فاخر', 'شاطئ'],
+    },
+    {
+      id: 'h3', nameAr: 'بانيان تري العُلا', nameEn: 'Banyan Tree AlUla',
+      descriptionAr: 'منتجع صحراوي فريد وسط الصخور الوردية، يقدم تجربة إقامة أسطورية تحت سماء العُلا المرصعة بالنجوم.',
+      descriptionEn: 'A unique desert resort amidst pink rocks, offering a legendary stay under the star-studded AlUla sky.',
+      image: 'https://images.unsplash.com/photo-1587874522487-fe10e954d035?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1587874522487-fe10e954d035?auto=format&fit=crop&w=800&q=80'],
+      cityId: '3', cityNameAr: 'العُلا', cityNameEn: 'AlUla',
+      address: 'AlUla, Saudi Arabia', addressAr: 'العُلا، المملكة العربية السعودية',
+      stars: 5, rating: 5.0, reviewCount: 1200,
+      pricePerNight: 3500, currency: 'SAR',
+      amenities: [
+        { icon: 'wifi-outline', nameAr: 'واي فاي مجاني', nameEn: 'Free WiFi' },
+        { icon: 'water-outline', nameAr: 'مسبح خاص', nameEn: 'Private Pool' },
+        { icon: 'restaurant-outline', nameAr: 'مطعم فريد', nameEn: 'Unique Restaurant' },
+      ],
+      amenitiesAr: ['واي فاي', 'مسبح خاص', 'مطعم'],
+      category: 'resort',
+      coordinates: { lat: 26.6107, lng: 37.9199 },
+      featured: true, isFavorite: false,
+      checkIn: '3:00 PM', checkOut: '12:00 PM',
+      tags: ['desert', 'luxury', 'unique'], tagsAr: ['صحراء', 'فاخر', 'فريد'],
+    },
+    {
+      id: 'h4', nameAr: 'فندق ماريوت أبها', nameEn: 'Marriott Abha',
+      descriptionAr: 'فندق يمتزج فيه الراحة العصرية مع البيئة الجبلية الخلابة في مدينة أبها. يقع على ارتفاع شاهق مع إطلالات خلابة على الوادي.',
+      descriptionEn: 'A hotel where modern comfort blends with the stunning mountain environment of Abha, located at a high altitude with breathtaking valley views.',
+      image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80'],
+      cityId: '4', cityNameAr: 'أبها', cityNameEn: 'Abha',
+      address: 'Green Mountain, Abha', addressAr: 'الجبل الأخضر، أبها',
+      stars: 4, rating: 4.6, reviewCount: 2100,
+      pricePerNight: 850, currency: 'SAR',
+      amenities: [
+        { icon: 'wifi-outline', nameAr: 'واي فاي مجاني', nameEn: 'Free WiFi' },
+        { icon: 'restaurant-outline', nameAr: 'مطعم', nameEn: 'Restaurant' },
+        { icon: 'car-outline', nameAr: 'موقف', nameEn: 'Parking' },
+      ],
+      amenitiesAr: ['واي فاي', 'مطعم', 'موقف'],
+      category: 'business',
+      coordinates: { lat: 18.2164, lng: 42.5053 },
+      featured: false, isFavorite: false,
+      checkIn: '2:00 PM', checkOut: '12:00 PM',
+      tags: ['mountain', 'modern', 'views'], tagsAr: ['جبال', 'حديث', 'مناظر'],
+    },
+  ];
+
+  readonly restaurants: Restaurant[] = [
+    {
+      id: 'r1', nameAr: 'مطعم نجد', nameEn: 'Najd Restaurant',
+      descriptionAr: 'تجربة أصيلة للمطبخ السعودي النجدي التقليدي في قلب الرياض. يقدم أشهى الأطباق التراثية كالكبسة والمندي والجريش في أجواء تراثية دافئة.',
+      descriptionEn: 'An authentic experience of traditional Najdi Saudi cuisine in the heart of Riyadh. Serving the most delicious heritage dishes like Kabsa, Mandi, and Jareesh in warm traditional ambiance.',
+      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80'],
+      cityId: '1', cityNameAr: 'الرياض', cityNameEn: 'Riyadh',
+      address: 'Olaya Street, Riyadh', addressAr: 'شارع العليا، الرياض',
+      cuisine: 'Saudi Traditional', cuisineAr: 'سعودي تقليدي',
+      category: 'saudi', rating: 4.8, reviewCount: 4200,
+      priceRange: 2, openingHours: '12pm - 12am', openingHoursAr: '12ظ - 12م',
+      coordinates: { lat: 24.6910, lng: 46.6763 },
+      featured: true, isFavorite: false,
+      tags: ['kabsa', 'mandi', 'traditional'], tagsAr: ['كبسة', 'مندي', 'تقليدي'],
+      isHalal: true, deliveryAvailable: true,
+    },
+    {
+      id: 'r2', nameAr: 'مطعم البحر الأحمر', nameEn: 'Red Sea Restaurant',
+      descriptionAr: 'مطعم أسماك وفواكه بحرية طازجة على كورنيش جدة مع إطلالة بحرية رائعة. يقدم أجود أنواع السمك المشوي والمحار والمأكولات البحرية الطازجة.',
+      descriptionEn: 'Fresh seafood restaurant on the Jeddah Corniche with stunning sea views. Serving the finest grilled fish, oysters, and fresh seafood.',
+      image: 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=800&q=80'],
+      cityId: '2', cityNameAr: 'جدة', cityNameEn: 'Jeddah',
+      address: 'Corniche Road, Jeddah', addressAr: 'طريق الكورنيش، جدة',
+      cuisine: 'Seafood', cuisineAr: 'مأكولات بحرية',
+      category: 'seafood', rating: 4.7, reviewCount: 6800,
+      priceRange: 3, openingHours: '1pm - 1am', openingHoursAr: '1ظ - 1ص',
+      coordinates: { lat: 21.5433, lng: 39.1728 },
+      featured: true, isFavorite: false,
+      tags: ['seafood', 'grilled', 'seaview'], tagsAr: ['أسماك', 'مشوي', 'إطلالة'],
+      isHalal: true, deliveryAvailable: false,
+    },
+    {
+      id: 'r3', nameAr: 'مطعم وادي العُلا', nameEn: 'AlUla Valley Restaurant',
+      descriptionAr: 'مطعم فريد في قلب وادي العُلا يقدم تجربة طعام لا مثيل لها وسط الصخور الوردية والإضاءة الدافئة تحت سماء مرصعة بالنجوم.',
+      descriptionEn: 'A unique restaurant in the heart of AlUla Valley offering an unparalleled dining experience amidst pink rocks and warm lighting under a star-studded sky.',
+      image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=800&q=80'],
+      cityId: '3', cityNameAr: 'العُلا', cityNameEn: 'AlUla',
+      address: 'AlUla Old Town', addressAr: 'البلدة القديمة، العُلا',
+      cuisine: 'Arabic Fine Dining', cuisineAr: 'مطبخ عربي راقٍ',
+      category: 'fine-dining', rating: 4.9, reviewCount: 1400,
+      priceRange: 4, openingHours: '7pm - 11pm', openingHoursAr: '7م - 11م',
+      coordinates: { lat: 26.6107, lng: 37.9199 },
+      featured: true, isFavorite: false,
+      tags: ['unique', 'desert', 'fine-dining'], tagsAr: ['فريد', 'صحراء', 'راقٍ'],
+      isHalal: true, deliveryAvailable: false,
+    },
+    {
+      id: 'r4', nameAr: 'مقهى أبها الجبلي', nameEn: 'Abha Mountain Café',
+      descriptionAr: 'مقهى دافئ يحتضن زوار جبال أبها بالقهوة العربية الأصيلة والحلويات التقليدية مع إطلالات رائعة على الأودية الخضراء.',
+      descriptionEn: 'A cozy café welcoming Abha mountain visitors with authentic Arabic coffee and traditional sweets with stunning views over green valleys.',
+      image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
+      images: ['https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80'],
+      cityId: '4', cityNameAr: 'أبها', cityNameEn: 'Abha',
+      address: 'Al Soudah Road, Abha', addressAr: 'طريق السودة، أبها',
+      cuisine: 'Café', cuisineAr: 'مقهى',
+      category: 'cafe', rating: 4.6, reviewCount: 2300,
+      priceRange: 1, openingHours: '7am - 12am', openingHoursAr: '7ص - 12م',
+      coordinates: { lat: 18.2164, lng: 42.5053 },
+      featured: false, isFavorite: false,
+      tags: ['coffee', 'views', 'cozy'], tagsAr: ['قهوة', 'مناظر', 'دافئ'],
+      isHalal: true, deliveryAvailable: true,
+    },
+  ];
+
+  getHotelsByCityId(cityId: string): Hotel[] {
+    return this.hotels.filter(h => h.cityId === cityId);
+  }
+
+  getFeaturedHotels(): Hotel[] {
+    return this.hotels.filter(h => h.featured);
+  }
+
+  getRestaurantsByCityId(cityId: string): Restaurant[] {
+    return this.restaurants.filter(r => r.cityId === cityId);
+  }
+
+  getFeaturedRestaurants(): Restaurant[] {
+    return this.restaurants.filter(r => r.featured);
+  }
+
+  searchAll(query: string): { cities: City[]; attractions: Attraction[]; events: TourismEvent[] } {
+    return {
+      cities: this.searchCities(query),
+      attractions: this.searchAttractions(query),
+      events: this.events.filter(e =>
+        e.titleAr.includes(query) || e.titleEn.toLowerCase().includes(query.toLowerCase()) ||
+        e.cityNameAr.includes(query)
+      ),
+    };
   }
 }

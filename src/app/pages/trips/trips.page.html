@@ -1,42 +1,164 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>رحلاتي</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- ═══════════════════════════════════════════════
+     TRIP PLANNER — My Trips + AI Itinerary Builder
+  ═══════════════════════════════════════════════ -->
 
-<ion-content class="trips-content">
+<ion-content class="trips-content" [fullscreen]="true">
 
-  <div *ngIf="trips().length === 0" class="empty-wrap">
-    <app-empty-state
-      icon="airplane-outline"
-      title="لا توجد رحلات"
-      message="خطّط رحلتك الأولى إلى المملكة العربية السعودية الآن"
-      actionLabel="إضافة رحلة جديدة"
-      [action]="addTripFn">
-    </app-empty-state>
+  <!-- ─── Sticky Header ────────────────────────────────────────────────────── -->
+  <div class="trips-header safe-area-top">
+    <h1 class="header-title">رحلاتي ✈️</h1>
+    <button class="plan-btn" (click)="openPlanner()">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      <span>خطّط رحلة</span>
+    </button>
   </div>
 
-  <div *ngIf="trips().length > 0" class="trips-list">
-    <div *ngFor="let trip of trips()" class="trip-card" (click)="tripOptions(trip)">
-      <div class="trip-emoji">✈️</div>
-      <div class="trip-info">
-        <h3 class="trip-name">{{ trip.nameAr }}</h3>
-        <div class="trip-dates" *ngIf="trip.startDate">
-          <ion-icon name="calendar-outline"></ion-icon>
-          <span>{{ trip.startDate | date:'dd MMM yyyy' }}</span>
-          <span *ngIf="trip.endDate"> – {{ trip.endDate | date:'dd MMM yyyy' }}</span>
+  <!-- ─── Planner Panel (step-by-step) ─────────────────────────────────────── -->
+  <div class="planner-panel" *ngIf="showPlanner">
+    <div class="panel-header">
+      <h2 class="panel-title">✨ مخطط الرحلات الذكي</h2>
+      <button class="close-btn" (click)="closePlanner()">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Step 1: Choose City -->
+    <div class="step-section" *ngIf="plannerStep === 1">
+      <p class="step-label">الخطوة 1 من 3 — اختر المدينة</p>
+      <div class="city-picker">
+        <button
+          *ngFor="let city of availableCities"
+          class="city-chip"
+          [class.selected]="selectedCityId === city.id"
+          (click)="selectCity(city.id)">
+          <span class="city-icon">🏙️</span>
+          <span>{{ city.nameAr }}</span>
+        </button>
+      </div>
+      <ion-button expand="block" class="step-btn" [disabled]="!selectedCityId" (click)="plannerStep = 2">
+        التالي
+        <ion-icon slot="end" name="arrow-back-outline" class="flip-icon"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- Step 2: Days + Interests -->
+    <div class="step-section" *ngIf="plannerStep === 2">
+      <p class="step-label">الخطوة 2 من 3 — عدد الأيام والاهتمامات</p>
+
+      <div class="days-picker">
+        <p class="sub-label">عدد أيام الرحلة</p>
+        <div class="days-row">
+          <button class="day-btn" *ngFor="let d of [1,2,3,4,5,7]"
+            [class.selected]="selectedDays === d"
+            (click)="selectedDays = d">{{ d }} {{ d === 1 ? 'يوم' : 'أيام' }}</button>
         </div>
       </div>
-      <div class="trip-status" [class]="'status-' + trip.status">
-        {{ statusLabel(trip.status) }}
+
+      <div class="interests-picker">
+        <p class="sub-label">اهتماماتك (اختر أكثر من واحد)</p>
+        <div class="interests-grid">
+          <button *ngFor="let interest of plannerInterests"
+            class="interest-btn"
+            [class.selected]="isInterestSelected(interest.id)"
+            (click)="toggleInterest(interest.id)">
+            <span class="int-icon">{{ interest.icon }}</span>
+            <span class="int-label">{{ interest.label }}</span>
+          </button>
+        </div>
+      </div>
+
+      <ion-button expand="block" class="step-btn" [disabled]="selectedDays < 1" (click)="generateTrip()">
+        <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+        توليد الرحلة الذكية
+      </ion-button>
+    </div>
+
+    <!-- Step 3: Generated Itinerary -->
+    <div class="step-section" *ngIf="plannerStep === 3 && generatedTrip">
+      <div class="itinerary-header">
+        <h3 class="itin-title">رحلتك إلى {{ generatedTrip.cityNameAr }} 🌟</h3>
+        <div class="itin-meta">
+          <span>{{ selectedDays }} {{ selectedDays === 1 ? 'يوم' : 'أيام' }}</span>
+          <span class="dot">·</span>
+          <span>ميزانية: {{ generatedTrip.estimatedBudget }}</span>
+        </div>
+      </div>
+
+      <div class="days-list">
+        <div *ngFor="let day of generatedTrip.days" class="day-card">
+          <div class="day-label">
+            <div class="day-num">اليوم {{ day.day }}</div>
+            <div class="day-date">{{ day.date | date:'EEE d MMM' }}</div>
+          </div>
+
+          <div class="period-block" *ngFor="let activity of allActivities(day)">
+            <div class="act-icon">{{ activity.icon }}</div>
+            <div class="act-info">
+              <p class="act-name">{{ activity.nameAr }}</p>
+              <span class="act-duration">⏱ {{ activity.duration }}</span>
+              <p class="act-tip" *ngIf="activity.tip">💡 {{ activity.tip }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="itin-actions">
+        <ion-button expand="block" class="save-trip-btn" (click)="saveGeneratedTrip()">
+          <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+          حفظ الرحلة
+        </ion-button>
+        <ion-button expand="block" fill="outline" (click)="plannerStep = 2">
+          إعادة التوليد
+        </ion-button>
       </div>
     </div>
   </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addTrip()">
-      <ion-icon name="add-outline"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <!-- ─── My Saved Trips ────────────────────────────────────────────────────── -->
+  <div class="saved-section">
+    <h2 class="section-title" *ngIf="trips().length > 0">رحلاتي المحفوظة</h2>
+
+    <div *ngIf="trips().length === 0 && !showPlanner" class="empty-state">
+      <div class="empty-icon">✈️</div>
+      <h3 class="empty-title">لا توجد رحلات بعد</h3>
+      <p class="empty-msg">استخدم مخطط الرحلات الذكي لإنشاء رحلتك الأولى</p>
+      <ion-button class="start-plan-btn" (click)="openPlanner()">
+        <ion-icon slot="start" name="sparkles-outline"></ion-icon>
+        ابدأ التخطيط
+      </ion-button>
+    </div>
+
+    <div class="trips-list" *ngIf="trips().length > 0">
+      <div *ngFor="let trip of trips(); let i = index"
+           class="trip-card animate-fadeInUp"
+           [style.animation-delay]="i * 0.07 + 's'"
+           (click)="tripOptions(trip)">
+
+        <div class="trip-img-bg" [style.background]="tripGradients[i % tripGradients.length]">
+          <span class="trip-emoji">✈️</span>
+        </div>
+
+        <div class="trip-body">
+          <h3 class="trip-name">{{ trip.nameAr }}</h3>
+          <div class="trip-meta">
+            <div class="meta-chip" *ngIf="trip.startDate">
+              <ion-icon name="calendar-outline"></ion-icon>
+              <span>{{ trip.startDate | date:'d MMM' }}</span>
+            </div>
+            <div class="meta-chip" *ngIf="trip.cityIds?.length">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>{{ trip.cityIds.length }} {{ trip.cityIds.length === 1 ? 'مدينة' : 'مدن' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="trip-status-badge" [class]="'status-' + trip.status">
+          {{ statusLabel(trip.status) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-space"></div>
 
 </ion-content>

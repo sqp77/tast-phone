@@ -1,92 +1,177 @@
 .profile-content { --background: var(--ion-background-color); }
 
+// ─── Hero ──────────────────────────────────────────────────────────────────
 .profile-hero {
-  background: var(--gradient-primary);
-  padding: 32px 20px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.avatar-wrap {
   position: relative;
-  margin-bottom: 14px;
-}
+  overflow: hidden;
 
-.profile-avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  border: 3px solid rgba(255,255,255,0.5);
-  object-fit: cover;
-}
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -10%;
+      right: -10%;
+      height: 60px;
+      background: var(--ion-background-color);
+      border-radius: 50% 50% 0 0;
+    }
+  }
 
-.edit-avatar-btn {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: var(--color-gold);
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #fff;
-  font-size: 14px;
-}
-
-.profile-name {
-  font-size: 20px;
-  font-weight: 800;
-  color: #fff;
-  margin: 0 0 2px;
-  font-family: 'Cairo', sans-serif;
-}
-
-.profile-username {
-  font-size: 13px;
-  color: rgba(255,255,255,0.75);
-  margin: 0 0 2px;
-}
-
-.profile-email {
-  font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  margin: 0 0 20px;
-}
-
-.profile-stats {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 16px;
-  padding: 14px 24px;
-
-  .stat {
+  .hero-body {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    .stat-num { font-size: 20px; font-weight: 800; color: #fff; }
-    .stat-lbl { font-size: 11px; color: rgba(255,255,255,0.75); }
+    padding: 24px 20px 48px;
+    text-align: center;
   }
 
-  .stat-divider {
-    width: 1px;
-    height: 32px;
-    background: rgba(255,255,255,0.25);
+  .avatar-wrap {
+    position: relative;
+    margin-bottom: 12px;
+    .profile-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.6);
+      object-fit: cover;
+    }
+    .edit-avatar-btn {
+      position: absolute;
+      bottom: 0; right: 0;
+      background: var(--color-gold);
+      border: none;
+      border-radius: 50%;
+      width: 28px; height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      ion-icon { font-size: 14px; }
+    }
+  }
+
+  .profile-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 3px;
+    font-family: 'Cairo', sans-serif;
+  }
+
+  .profile-handle {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin: 0 0 18px;
+  }
+
+  .profile-stats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 12px 24px;
+    border: 1px solid rgba(255,255,255,0.25);
+
+    .stat-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .stat-num { font-size: 20px; font-weight: 800; color: #fff; }
+      .stat-lbl { font-size: 10px; color: rgba(255,255,255,0.75); }
+    }
+    .stat-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.3); }
   }
 }
 
+// ─── Gamification Card ──────────────────────────────────────────────────────
+.game-card {
+  margin: -8px 16px 16px;
+  background: var(--ion-card-background);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: var(--shadow-medium);
+  position: relative;
+  z-index: 2;
+
+  .game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    .game-level {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .level-icon { font-size: 28px; }
+      .level-name { font-size: 15px; font-weight: 800; margin: 0; }
+      .level-sub { font-size: 11px; color: var(--text-secondary); margin: 0; }
+    }
+
+    .points-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(201,162,39,0.12);
+      border-radius: 12px;
+      padding: 6px 12px;
+      ion-icon { font-size: 14px; color: var(--color-gold); }
+      span { font-size: 13px; font-weight: 700; color: var(--color-gold); }
+    }
+  }
+
+  .progress-bar-wrap {
+    margin-bottom: 14px;
+    .progress-bar-track {
+      height: 6px;
+      background: var(--ion-color-light);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 5px;
+      .progress-bar-fill {
+        height: 100%;
+        background: var(--gradient-primary);
+        border-radius: 3px;
+        transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+    }
+    .progress-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: block;
+    }
+  }
+
+  .badges-row {
+    gap: 10px;
+    .badge-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      flex-shrink: 0;
+      .badge-icon { font-size: 26px; }
+      .badge-name { font-size: 10px; font-weight: 600; white-space: nowrap; }
+      &.locked {
+        opacity: 0.35;
+        filter: grayscale(1);
+      }
+    }
+  }
+}
+
+// ─── Menu ─────────────────────────────────────────────────────────────────
 .menu-section {
   background: var(--ion-card-background);
-  margin: 16px;
+  margin: 0 16px 16px;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow-soft);
@@ -95,40 +180,27 @@
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: 12px;
+  padding: 13px 16px;
   cursor: pointer;
   border-bottom: 1px solid var(--ion-color-light);
   transition: background var(--transition-fast);
-
   &:last-child { border-bottom: none; }
-  &:active { background: var(--ion-color-light); }
+  &:active { background: var(--ion-background-color); }
 
   .menu-icon-wrap {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: var(--color-green-light);
+    width: 38px; height: 38px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
-    color: var(--ion-color-primary);
     flex-shrink: 0;
+    ion-icon { font-size: 19px; }
   }
 
-  .menu-label {
-    flex: 1;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ion-text-color);
-  }
+  .menu-label { flex: 1; font-size: 14px; font-weight: 600; }
 
-  .menu-end {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+  .menu-end { display: flex; align-items: center; gap: 6px; }
 
   .menu-badge {
     background: var(--ion-color-primary);
@@ -139,26 +211,19 @@
     border-radius: 8px;
   }
 
-  .menu-arrow {
-    font-size: 16px;
-    color: var(--text-tertiary);
-  }
+  .menu-arrow { font-size: 15px; color: var(--text-tertiary); }
 }
 
+// ─── Logout ───────────────────────────────────────────────────────────────
 .logout-wrap {
-  padding: 0 16px;
-  margin-top: 8px;
-}
-
-.logout-btn {
-  --border-radius: 14px;
-  height: 48px;
-  font-weight: 700;
+  padding: 0 16px 8px;
+  ion-button { --border-radius: 14px; font-weight: 700; }
 }
 
 .app-version {
   text-align: center;
   font-size: 11px;
   color: var(--text-tertiary);
-  padding: 16px;
+  padding: 12px 16px 40px;
 }
+

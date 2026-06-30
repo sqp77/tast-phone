@@ -2,51 +2,52 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon,
-  IonList, IonItem, IonLabel, IonToggle, AlertController, ToastController
+  AlertController
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
-  personOutline, heartOutline, airplaneOutline, notificationsOutline,
+  heartOutline, airplaneOutline, notificationsOutline,
   moonOutline, languageOutline, helpCircleOutline, informationCircleOutline,
-  logOutOutline, chevronForwardOutline, cameraOutline, createOutline
+  logOutOutline, chevronForwardOutline, cameraOutline, sparklesOutline,
+  trophyOutline, starOutline, restaurantOutline, bedOutline, chatbubblesOutline
 } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
 import { FavoritesService } from '../../core/services/favorites.service';
-import { NgIf, NgFor } from '@angular/common';
+import { GamificationService } from '../../core/services/gamification.service';
+import { NgIf, NgFor, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   templateUrl: 'profile.page.html',
   styleUrls: ['profile.page.scss'],
   standalone: true,
-  imports: [
-    IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon,
-    NgIf, NgFor,
-  ],
+  imports: [IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonIcon, NgIf, NgFor, DecimalPipe],
 })
 export class ProfilePage {
   readonly auth = inject(AuthService);
   readonly favorites = inject(FavoritesService);
+  readonly gamification = inject(GamificationService);
   private readonly router = inject(Router);
   private readonly alert = inject(AlertController);
-  private readonly toast = inject(ToastController);
 
   constructor() {
     addIcons({
-      personOutline, heartOutline, airplaneOutline, notificationsOutline,
+      heartOutline, airplaneOutline, notificationsOutline,
       moonOutline, languageOutline, helpCircleOutline, informationCircleOutline,
-      logOutOutline, chevronForwardOutline, cameraOutline, createOutline,
+      logOutOutline, chevronForwardOutline, cameraOutline, sparklesOutline,
+      trophyOutline, starOutline, restaurantOutline, bedOutline, chatbubblesOutline,
     });
   }
 
   readonly menuItems = [
-    { icon: 'heart-outline', label: 'المفضلة', route: '/tabs/favorites' },
-    { icon: 'airplane-outline', label: 'رحلاتي', route: '/tabs/trips' },
-    { icon: 'notifications-outline', label: 'الإشعارات', route: '/notifications' },
-    { icon: 'moon-outline', label: 'الوضع الليلي', route: null, toggle: true },
-    { icon: 'language-outline', label: 'اللغة', route: '/settings', badge: 'AR' },
-    { icon: 'help-circle-outline', label: 'مركز المساعدة', route: '/settings' },
-    { icon: 'information-circle-outline', label: 'عن التطبيق', route: '/about' },
+    { icon: 'heart-outline', label: 'المفضلة', route: '/tabs/favorites', color: '#E91E63' },
+    { icon: 'airplane-outline', label: 'رحلاتي', route: '/tabs/trips', color: '#2196F3' },
+    { icon: 'chatbubbles-outline', label: 'المرشد الذكي', route: '/ai-guide', color: '#009E60' },
+    { icon: 'bed-outline', label: 'الفنادق', route: '/hotels', color: '#9C27B0' },
+    { icon: 'restaurant-outline', label: 'المطاعم', route: '/restaurants', color: '#FF5722' },
+    { icon: 'notifications-outline', label: 'الإشعارات', route: '/notifications', color: '#FF9800' },
+    { icon: 'language-outline', label: 'اللغة والإعدادات', route: '/settings', color: '#607D8B', badge: 'AR' },
+    { icon: 'information-circle-outline', label: 'عن المملكة', route: '/about', color: '#006C35' },
   ];
 
   async confirmLogout(): Promise<void> {
@@ -57,10 +58,7 @@ export class ProfilePage {
         { text: 'إلغاء', role: 'cancel' },
         {
           text: 'خروج',
-          handler: async () => {
-            await this.auth.logout();
-            await this.router.navigate(['/auth/login'], { replaceUrl: true });
-          },
+          handler: async () => { await this.auth.logout(); },
         },
       ],
     });

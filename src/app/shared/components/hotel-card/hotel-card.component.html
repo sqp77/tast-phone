@@ -1,0 +1,31 @@
+<div class="hotel-card" (click)="open()">
+  <div class="card-image-wrap">
+    <img [src]="hotel.image" [alt]="hotel.nameAr" class="card-img" loading="lazy" />
+    <div class="card-overlay"></div>
+    <button class="fav-btn" (click)="toggleFavorite($event)">
+      <ion-icon [name]="hotel.isFavorite ? 'heart' : 'heart-outline'" [class.active]="hotel.isFavorite"></ion-icon>
+    </button>
+    <div class="stars-badge">
+      <ion-icon name="star"></ion-icon>
+      <span>{{ hotel.stars }}</span>
+    </div>
+  </div>
+  <div class="card-body">
+    <h3 class="hotel-name">{{ hotel.nameAr }}</h3>
+    <div class="location-row">
+      <ion-icon name="location-outline"></ion-icon>
+      <span>{{ hotel.cityNameAr }}</span>
+    </div>
+    <div class="rating-row">
+      <div class="rating-chip">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ hotel.rating }}</span>
+      </div>
+      <span class="reviews">({{ hotel.reviewCount | number }} تقييم)</span>
+    </div>
+    <div class="price-row">
+      <span class="price">{{ hotel.pricePerNight | number }} ريال</span>
+      <span class="per-night">/ ليلة</span>
+    </div>
+  </div>
+</div>

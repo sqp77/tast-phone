@@ -1,0 +1,40 @@
+.restaurants-content { --background: var(--ion-background-color); }
+
+.cats-row {
+  padding: 12px 16px;
+  gap: 8px;
+  ion-chip {
+    --background: var(--ion-card-background);
+    --color: var(--text-secondary);
+    border: 1.5px solid var(--ion-color-light);
+    font-weight: 600;
+    &.active-chip { --background: var(--gradient-primary); --color: #fff; border-color: transparent; }
+  }
+}
+
+.info-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--color-green-light);
+  margin: 0 16px 16px;
+  border-radius: 14px;
+  padding: 12px 16px;
+  .info-icon { font-size: 22px; }
+  p { margin: 0; font-size: 14px; font-weight: 600; color: var(--ion-color-primary); }
+}
+
+.restaurants-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 0 16px;
+  justify-content: space-between;
+
+  app-restaurant-card {
+    width: calc(50% - 7px);
+    ::ng-deep .rest-card { width: 100%; min-width: unset; }
+  }
+}
+
+.bottom-space { height: 80px; }

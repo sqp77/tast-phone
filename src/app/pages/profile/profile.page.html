@@ -1,67 +1,96 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>حسابي</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="profile-content" [fullscreen]="true">
 
-<ion-content class="profile-content">
-
-  <!-- Profile Hero -->
-  <div class="profile-hero">
-    <div class="avatar-wrap">
-      <img
-        [src]="auth.user()?.avatar || 'assets/icon/default-avatar.png'"
-        alt="avatar"
-        class="profile-avatar" />
-      <button class="edit-avatar-btn">
-        <ion-icon name="camera-outline"></ion-icon>
-      </button>
-    </div>
-    <h2 class="profile-name">{{ auth.displayName() }}</h2>
-    <p class="profile-username">{{ '@' + (auth.user()?.username ?? '') }}</p>
-    <p class="profile-email">{{ auth.user()?.email }}</p>
-
-    <!-- Stats Row -->
-    <div class="profile-stats">
-      <div class="stat">
-        <span class="stat-num">{{ favorites.count() }}</span>
-        <span class="stat-lbl">مفضلة</span>
+  <!-- ─── Hero ─────────────────────────────────────────────────────────────── -->
+  <div class="profile-hero safe-area-top">
+    <div class="hero-bg"></div>
+    <div class="hero-body">
+      <div class="avatar-wrap">
+        <img [src]="auth.user()?.avatar || 'https://i.pravatar.cc/150?img=8'"
+             alt="avatar" class="profile-avatar" />
+        <button class="edit-avatar-btn">
+          <ion-icon name="camera-outline"></ion-icon>
+        </button>
       </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-num">3</span>
-        <span class="stat-lbl">رحلات</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-num">12</span>
-        <span class="stat-lbl">تقييم</span>
+      <h2 class="profile-name">{{ auth.displayName() }}</h2>
+      <p class="profile-handle">&#64;{{ auth.user()?.username }}</p>
+
+      <!-- Stats -->
+      <div class="profile-stats">
+        <div class="stat-pill">
+          <span class="stat-num">{{ favorites.count() }}</span>
+          <span class="stat-lbl">مفضلة</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-num">{{ gamification.profile().citiesVisited }}</span>
+          <span class="stat-lbl">مدن</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-pill">
+          <span class="stat-num">{{ gamification.profile().tripsCreated }}</span>
+          <span class="stat-lbl">رحلات</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Menu Items -->
+  <!-- ─── Gamification Card ────────────────────────────────────────────────── -->
+  <div class="game-card">
+    <div class="game-header">
+      <div class="game-level">
+        <span class="level-icon">🏆</span>
+        <div>
+          <p class="level-name">{{ gamification.levelName() }}</p>
+          <p class="level-sub">المستوى {{ gamification.level() }}</p>
+        </div>
+      </div>
+      <div class="points-badge">
+        <ion-icon name="star-outline"></ion-icon>
+        <span>{{ gamification.points() | number }} نقطة</span>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" [style.width.%]="gamification.progressToNextLevel()"></div>
+      </div>
+      <span class="progress-label" *ngIf="gamification.nextLevel()">
+        {{ gamification.progressToNextLevel() }}% نحو {{ gamification.nextLevel()!.nameAr }}
+      </span>
+    </div>
+
+    <!-- Badges -->
+    <div class="badges-row scroll-x" *ngIf="gamification.badges().length > 0">
+      <div *ngFor="let badge of gamification.badges()" class="badge-item" [class.locked]="!badge.unlocked">
+        <span class="badge-icon">{{ badge.icon }}</span>
+        <span class="badge-name">{{ badge.nameAr }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Menu ─────────────────────────────────────────────────────────────── -->
   <div class="menu-section">
-    <div *ngFor="let item of menuItems" class="menu-item" (click)="navigate(item.route)">
-      <div class="menu-icon-wrap">
-        <ion-icon [name]="item.icon"></ion-icon>
+    <div *ngFor="let item of menuItems"
+         class="menu-item"
+         (click)="navigate(item.route)">
+      <div class="menu-icon-wrap" [style.background]="item.color + '18'">
+        <ion-icon [name]="item.icon" [style.color]="item.color"></ion-icon>
       </div>
       <span class="menu-label">{{ item.label }}</span>
       <div class="menu-end">
-        <span *ngIf="item.badge" class="menu-badge">{{ item.badge }}</span>
+        <span *ngIf="item['badge']" class="menu-badge">{{ item['badge'] }}</span>
         <ion-icon name="chevron-forward-outline" class="menu-arrow"></ion-icon>
       </div>
     </div>
   </div>
 
-  <!-- Logout -->
+  <!-- ─── Logout ───────────────────────────────────────────────────────────── -->
   <div class="logout-wrap">
-    <ion-button expand="block" fill="outline" color="danger" class="logout-btn" (click)="confirmLogout()">
+    <ion-button expand="block" fill="outline" color="danger" (click)="confirmLogout()">
       <ion-icon name="log-out-outline" slot="start"></ion-icon>
       تسجيل الخروج
     </ion-button>
   </div>
 
-  <div class="app-version">Saudi Explorer v1.0.0</div>
+  <div class="app-version">Saudi Explorer v1.0.0 • جميع الحقوق محفوظة</div>
 
 </ion-content>

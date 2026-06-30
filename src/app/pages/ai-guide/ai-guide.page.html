@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar class="ai-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <div class="ai-header-center">
+      <div class="ai-avatar-wrap">
+        <span class="ai-avatar-emoji">🤖</span>
+        <span class="ai-status"></span>
+      </div>
+      <div class="ai-header-text">
+        <h3 class="ai-name">المرشد الذكي</h3>
+        <p class="ai-sub">متصل دائماً • يتحدث العربية</p>
+      </div>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="clearChat()">
+        <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content #chatContent class="ai-content">
+
+  <!-- Messages -->
+  <div class="messages-wrap">
+    <div *ngFor="let msg of messages; let i = index"
+         class="msg-bubble-wrap"
+         [class.user-wrap]="msg.role === 'user'"
+         [class.ai-wrap]="msg.role === 'assistant'">
+
+      <!-- AI Avatar -->
+      <div class="ai-bubble-avatar" *ngIf="msg.role === 'assistant'">
+        <span>🤖</span>
+      </div>
+
+      <!-- Bubble -->
+      <div class="msg-bubble"
+           [class.user-bubble]="msg.role === 'user'"
+           [class.ai-bubble]="msg.role === 'assistant'">
+
+        <!-- Loading dots -->
+        <div class="typing-dots" *ngIf="msg.isLoading">
+          <span></span><span></span><span></span>
+        </div>
+
+        <!-- Message text -->
+        <p class="msg-text" *ngIf="!msg.isLoading" [innerHTML]="msg.content.replace('\n', '<br>')"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Questions (only show when few messages) -->
+  <div class="quick-questions" *ngIf="messages.length <= 1">
+    <p class="quick-label">أسئلة سريعة</p>
+    <div class="quick-grid">
+      <button *ngFor="let q of quickQuestions"
+              class="quick-chip"
+              (click)="sendQuickQuestion(q.query)">
+        {{ q.label }}
+      </button>
+    </div>
+  </div>
+
+  <div class="bottom-pad"></div>
+</ion-content>
+
+<ion-footer class="ai-footer">
+  <div class="input-bar">
+    <textarea
+      class="chat-input"
+      [(ngModel)]="inputText"
+      placeholder="اسألني عن أي وجهة سياحية..."
+      rows="1"
+      (keydown)="onEnter($event)">
+    </textarea>
+    <button class="send-btn"
+            [class.active]="inputText.trim().length > 0"
+            [disabled]="!inputText.trim()"
+            (click)="sendMessage()">
+      <ion-icon name="send-outline"></ion-icon>
+    </button>
+  </div>
+  <p class="ai-disclaimer">المرشد الذكي • Saudi Explorer AI</p>
+</ion-footer>

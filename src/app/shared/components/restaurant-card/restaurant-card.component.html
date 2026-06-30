@@ -1,0 +1,31 @@
+<div class="rest-card" (click)="open()">
+  <div class="card-img-wrap">
+    <img [src]="restaurant.image" [alt]="restaurant.nameAr" class="card-img" loading="lazy" />
+    <div class="card-overlay"></div>
+    <button class="fav-btn" (click)="toggleFavorite($event)">
+      <ion-icon [name]="restaurant.isFavorite ? 'heart' : 'heart-outline'" [class.active]="restaurant.isFavorite"></ion-icon>
+    </button>
+    <div class="cuisine-badge">{{ restaurant.cuisineAr }}</div>
+  </div>
+  <div class="card-body">
+    <h3 class="rest-name">{{ restaurant.nameAr }}</h3>
+    <div class="info-row">
+      <div class="rating">
+        <ion-icon name="star"></ion-icon>
+        <span>{{ restaurant.rating }}</span>
+      </div>
+      <span class="dot">·</span>
+      <span class="price-range">{{ priceSymbol }}</span>
+      <span class="dot">·</span>
+      <span class="halal" *ngIf="restaurant.isHalal">حلال ✓</span>
+    </div>
+    <div class="location-row">
+      <ion-icon name="location-outline"></ion-icon>
+      <span>{{ restaurant.cityNameAr }}</span>
+    </div>
+    <div class="hours-row">
+      <ion-icon name="time-outline"></ion-icon>
+      <span>{{ restaurant.openingHoursAr }}</span>
+    </div>
+  </div>
+</div>

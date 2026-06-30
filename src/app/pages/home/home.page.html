@@ -4,7 +4,7 @@
     <ion-refresher-content pullingText="اسحب للتحديث" refreshingText="جاري التحديث..."></ion-refresher-content>
   </ion-refresher>
 
-  <!-- ─── Hero Banner ─────────────────────────────────────────────────────── -->
+  <!-- ─── Hero ──────────────────────────────────────────────────────────────── -->
   <div class="hero-section">
     <div class="hero-image-wrap">
       <img [src]="currentHero.image" class="hero-img" [alt]="currentHero.titleAr" />
@@ -16,51 +16,58 @@
       <button class="icon-btn" (click)="openMenu()">
         <ion-icon name="menu-outline"></ion-icon>
       </button>
-      <div class="logo-text">Saudi Explorer</div>
+      <div class="logo-text">🕌 Saudi Explorer</div>
       <div class="top-actions">
         <button class="icon-btn notif-btn" (click)="goToNotifications()">
           <ion-icon name="notifications-outline"></ion-icon>
-          <ion-badge *ngIf="unreadCount() > 0" class="notif-badge">{{ unreadCount() }}</ion-badge>
+          <span *ngIf="unreadCount() > 0" class="notif-dot">{{ unreadCount() }}</span>
         </button>
-        <ion-avatar class="user-avatar" (click)="openMenu()">
-          <img [src]="user()?.avatar || 'assets/icon/default-avatar.png'" alt="avatar" />
+        <ion-avatar class="user-avatar" (click)="goToSearch()">
+          <img [src]="user()?.avatar || 'https://i.pravatar.cc/150?img=8'" alt="avatar" />
         </ion-avatar>
       </div>
     </div>
 
     <!-- Hero Content -->
     <div class="hero-content">
-      <ion-chip class="hero-badge">{{ currentHero.badge }}</ion-chip>
+      <span class="hero-badge-pill">{{ currentHero.badge }}</span>
       <h1 class="hero-title">{{ currentHero.titleAr }}</h1>
       <p class="hero-subtitle">{{ currentHero.subtitleAr }}</p>
     </div>
 
     <!-- Hero Dots -->
     <div class="hero-dots">
-      <button
-        *ngFor="let s of heroSlides; let i = index"
-        class="hero-dot"
-        [class.active]="i === currentHeroIndex"
-        (click)="selectHero(i)">
-      </button>
+      <button *ngFor="let s of heroSlides; let i = index"
+              class="hero-dot" [class.active]="i === currentHeroIndex"
+              (click)="selectHero(i)"></button>
     </div>
 
     <!-- Search Bar -->
-    <div class="search-bar-wrap" (click)="goToSearch()">
-      <div class="search-bar">
-        <ion-icon name="search-outline" class="search-icon"></ion-icon>
-        <span class="search-placeholder">ابحث عن مدينة، معلم، فعالية...</span>
-      </div>
+    <div class="search-bar-float" (click)="goToSearch()">
+      <ion-icon name="search-outline"></ion-icon>
+      <span>ابحث عن مدينة، معلم، فعالية...</span>
     </div>
   </div>
 
   <!-- ─── Quick Links ─────────────────────────────────────────────────────── -->
-  <div class="quick-links-wrap">
-    <div class="scroll-x quick-links">
-      <div *ngFor="let link of quickLinks" class="quick-link">
-        <div class="ql-icon">{{ link.icon }}</div>
+  <div class="quick-links-section">
+    <div class="scroll-x quick-links-row">
+      <button *ngFor="let link of quickLinks" class="ql-item" (click)="navigateTo(link.route)">
+        <div class="ql-icon-wrap">{{ link.icon }}</div>
         <span class="ql-label">{{ link.label }}</span>
-      </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ─── AI Guide Banner ───────────────────────────────────────────────────── -->
+  <div class="ai-banner" (click)="goToAiGuide()">
+    <div class="ai-banner-icon">🤖</div>
+    <div class="ai-banner-text">
+      <p class="ai-title">المرشد الذكي</p>
+      <p class="ai-sub">اسألني أي شيء عن السياحة في المملكة</p>
+    </div>
+    <div class="ai-banner-arrow">
+      <ion-icon name="sparkles-outline"></ion-icon>
     </div>
   </div>
 
@@ -77,13 +84,8 @@
     <div *ngIf="isLoading" class="scroll-x px-section">
       <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
     </div>
-
     <div *ngIf="!isLoading" class="scroll-x px-section">
-      <app-city-card
-        *ngFor="let city of cities"
-        [city]="city"
-        variant="wide">
-      </app-city-card>
+      <app-city-card *ngFor="let city of cities" [city]="city" variant="wide"></app-city-card>
     </div>
   </section>
 
@@ -100,12 +102,44 @@
     <div *ngIf="isLoading" class="scroll-x px-section">
       <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
     </div>
-
     <div *ngIf="!isLoading" class="scroll-x px-section">
-      <app-attraction-card
-        *ngFor="let attr of attractions"
-        [attraction]="attr">
-      </app-attraction-card>
+      <app-attraction-card *ngFor="let attr of attractions" [attraction]="attr"></app-attraction-card>
+    </div>
+  </section>
+
+  <!-- ─── Featured Hotels ───────────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="فنادق مميزة"
+      subtitle="أفخم الإقامات في المملكة"
+      [showAction]="true"
+      actionLabel="عرض الكل"
+      (actionClick)="goToHotels()">
+    </app-section-header>
+
+    <div *ngIf="isLoading" class="scroll-x px-section">
+      <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
+    </div>
+    <div *ngIf="!isLoading" class="scroll-x px-section">
+      <app-hotel-card *ngFor="let hotel of hotels" [hotel]="hotel"></app-hotel-card>
+    </div>
+  </section>
+
+  <!-- ─── Featured Restaurants ─────────────────────────────────────────── -->
+  <section class="section">
+    <app-section-header
+      title="أفضل المطاعم"
+      subtitle="تجارب طعام استثنائية"
+      [showAction]="true"
+      actionLabel="عرض الكل"
+      (actionClick)="goToRestaurants()">
+    </app-section-header>
+
+    <div *ngIf="isLoading" class="scroll-x px-section">
+      <app-skeleton-card variant="city" [count]="3"></app-skeleton-card>
+    </div>
+    <div *ngIf="!isLoading" class="scroll-x px-section">
+      <app-restaurant-card *ngFor="let rest of restaurants" [restaurant]="rest"></app-restaurant-card>
     </div>
   </section>
 
@@ -122,13 +156,8 @@
     <div *ngIf="isLoading" class="scroll-x px-section">
       <app-skeleton-card variant="event" [count]="3"></app-skeleton-card>
     </div>
-
     <div *ngIf="!isLoading" class="scroll-x px-section">
-      <app-event-card
-        *ngFor="let event of events"
-        [event]="event"
-        variant="card">
-      </app-event-card>
+      <app-event-card *ngFor="let event of events" [event]="event" variant="card"></app-event-card>
     </div>
   </section>
 
@@ -141,20 +170,23 @@
     </app-section-header>
 
     <div class="articles-list px-section" *ngIf="!isLoading">
-      <div *ngFor="let article of articles; let i = index" class="article-card animate-fadeInUp" [style.animation-delay]="i * 0.1 + 's'">
-        <img [src]="article.image" [alt]="article.titleAr" class="article-img" loading="lazy" />
-        <div class="article-body">
-          <ion-chip class="article-cat">{{ article.categoryAr }}</ion-chip>
-          <h3 class="article-title">{{ article.titleAr }}</h3>
-          <div class="article-meta">
-            <span class="article-author">{{ article.author }}</span>
-            <span class="dot">·</span>
-            <span class="article-time">{{ article.readTimeMin }} دقائق قراءة</span>
-          </div>
-        </div>
-      </div>
+      <app-article-card
+        *ngFor="let article of articles"
+        [article]="article"
+        variant="horizontal">
+      </app-article-card>
     </div>
   </section>
+
+  <!-- ─── Saudi Vision 2030 Banner ──────────────────────────────────────── -->
+  <div class="vision-banner">
+    <div class="vision-content">
+      <p class="vision-label">رؤية 2030</p>
+      <h3 class="vision-title">المملكة وجهة عالمية</h3>
+      <p class="vision-desc">100 مليون زيارة سياحية بحلول 2030</p>
+    </div>
+    <div class="vision-icon">🇸🇦</div>
+  </div>
 
   <div class="bottom-space"></div>
 

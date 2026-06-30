@@ -1,11 +1,13 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
-import { Observable, map, of, forkJoin } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { Observable, map, of } from 'rxjs';
 import { ApiService } from './api.service';
 import { MockDataService } from './mock-data.service';
 import { City } from '../models/city.model';
 import { Attraction } from '../models/attraction.model';
 import { TourismEvent } from '../models/event.model';
 import { Article } from '../models/article.model';
+import { Hotel } from '../models/hotel.model';
+import { Restaurant } from '../models/restaurant.model';
 import { PaginationParams } from '../models/api.model';
 
 const CITY_IMAGES = [
@@ -88,6 +90,26 @@ export class TourismService {
     return this.api.searchPosts({ q: query, limit: 20 }).pipe(
       map(res => res.posts.map((p, i) => this.transformPostToArticle(p, i)))
     );
+  }
+
+  // ─── Hotels ──────────────────────────────────────────────────────────────
+  getFeaturedHotels(): Observable<Hotel[]> {
+    return of(this.mock.getFeaturedHotels());
+  }
+
+  getHotels(cityId?: string): Observable<Hotel[]> {
+    if (cityId) return of(this.mock.getHotelsByCityId(cityId));
+    return of(this.mock.hotels);
+  }
+
+  // ─── Restaurants ─────────────────────────────────────────────────────────
+  getFeaturedRestaurants(): Observable<Restaurant[]> {
+    return of(this.mock.getFeaturedRestaurants());
+  }
+
+  getRestaurants(cityId?: string): Observable<Restaurant[]> {
+    if (cityId) return of(this.mock.getRestaurantsByCityId(cityId));
+    return of(this.mock.restaurants);
   }
 
   // ─── Global Search ────────────────────────────────────────────────────────

@@ -1,0 +1,28 @@
+<div class="article-card" [class.vertical]="variant === 'vertical'">
+  <div class="article-img-wrap">
+    <img [src]="article.image" [alt]="article.titleAr" class="article-img" loading="lazy" />
+    <ion-chip class="cat-chip">{{ article.categoryAr }}</ion-chip>
+  </div>
+  <div class="article-body">
+    <div class="author-row">
+      <img [src]="article.authorAvatar" class="author-avatar" [alt]="article.author" />
+      <span class="author-name">{{ article.author }}</span>
+    </div>
+    <h3 class="article-title">{{ article.titleAr }}</h3>
+    <p class="article-excerpt" *ngIf="variant === 'vertical'">{{ article.excerptAr }}</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ article.readTimeMin }} د</span>
+      </div>
+      <div class="meta-item">
+        <ion-icon name="eye-outline"></ion-icon>
+        <span>{{ article.views }}</span>
+      </div>
+      <div class="meta-item">
+        <ion-icon name="heart-outline"></ion-icon>
+        <span>{{ article.likes }}</span>
+      </div>
+    </div>
+  </div>
+</div>

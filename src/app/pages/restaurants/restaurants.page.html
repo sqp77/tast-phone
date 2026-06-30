@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>المطاعم المميزة</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="ابحث عن مطعم..." (ionInput)="onSearch($event)" animated></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="restaurants-content">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="cats-row scroll-x">
+    <ion-chip *ngFor="let cat of categories"
+      [class.active-chip]="activeCategory === cat.id"
+      (click)="selectCategory(cat.id)">
+      <ion-label>{{ cat.label }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <div class="info-banner">
+    <span class="info-icon">🍽️</span>
+    <p>{{ filtered.length }} مطعم مميز في المملكة</p>
+  </div>
+
+  <div class="restaurants-grid" *ngIf="filtered.length > 0">
+    <app-restaurant-card *ngFor="let r of filtered" [restaurant]="r"></app-restaurant-card>
+  </div>
+
+  <app-empty-state
+    *ngIf="filtered.length === 0"
+    icon="restaurant-outline"
+    title="لا توجد مطاعم"
+    message="جرّب فئة مختلفة">
+  </app-empty-state>
+
+  <div class="bottom-space"></div>
+</ion-content>

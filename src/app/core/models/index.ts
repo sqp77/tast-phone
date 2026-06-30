@@ -4,3 +4,5 @@ export * from './event.model';
 export * from './article.model';
 export * from './user.model';
 export * from './api.model';
+export * from './hotel.model';
+export * from './restaurant.model';
